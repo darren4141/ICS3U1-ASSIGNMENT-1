@@ -1,7 +1,6 @@
 import java.io.*;
 import java.text.DecimalFormat;
 
-
 public class ExtensionArraysAndFunctions{
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static DecimalFormat moneyFormat = new DecimalFormat(".00");
@@ -58,7 +57,7 @@ public class ExtensionArraysAndFunctions{
             "What is wrong with you "+name
         };
         final double [] THINLIQUIDPRICES = {6, 12, 8};
-        final String THINLIQUIDMAINMESSAGE = "On a diet today "+name+"?\nWhat type of thin liquid would you like?";
+        String THINLIQUIDMAINMESSAGE = "On a diet today "+name+"?\nWhat type of thin liquid would you like?";
         
         //DECLARE THICK LIQUID GROUP VARIABLES
         final String[] THICKLIQUIDMENU= {"Ink", "Sewage waste", "Soap"};
@@ -69,7 +68,7 @@ public class ExtensionArraysAndFunctions{
             "Just because it smells good doesn't mean it'll taste good"
         };
         final double [] THICKLIQUIDPRICES = {20, 1, 10};
-        final String THICKLIQUIDMAINMESSAGE = "Thick liquids are better for your throat.\nWhat type of thick liquid would you like "+name+"?";
+        String THICKLIQUIDMAINMESSAGE = "Thick liquids are better for your throat.\nWhat type of thick liquid would you like "+name+"?";
         
         //DECLARE FLAVOUR GROUP VARIABLES 
         final String[] FLAVOURMENU = {"Cheese", "Ketchup", "Aluminium", "Pickle", "Sriracha", "Spoiled milk", "Mold", "Fish"};
@@ -85,7 +84,7 @@ public class ExtensionArraysAndFunctions{
             "Lucky you "+name+"! I caught this one this morning"
         };
         final double [] FLAVOURPRICES = {7, 2, 4, 3, 5, 7, 1, 6};
-        final String FLAVOURMAINMESSAGE = name+", guess what time it is. It's time to choose from our delicious flavours!\nWhat flavour would you like?";
+        String FLAVOURMAINMESSAGE = name+", guess what time it is. It's time to choose from our delicious flavours!\nWhat flavour would you like?";
 
         //DECLARE TOPPING GROUP VARIABLES
         final String[] TOPPINGMENU = {"Wood chips", "Tylenol", "Assorted cubed meat", "Cucumber", "Chalk"};
@@ -109,12 +108,14 @@ public class ExtensionArraysAndFunctions{
             "Feeding a whole party are we "+name+"?"
         };
         final double[] SIZEPRICES = {0.5, 1, 100};
-        final String SIZEMAINMESSAGE = "Almost done "+name+"!\nWhat size would you like today?\nFinal cost is multiplied based on size";
+        String SIZEMAINMESSAGE = "Almost done "+name+"!\nWhat size would you like today?\nFinal cost is multiplied based on size";
 
         //WELCOME
         System.out.println("Welcome to "+SHOPNAME+"!");
         System.out.println("What is your name?");
         name = br.readLine();
+
+        
 
 		System.out.println("Welcome "+name+"! What would you like today?");
 		System.out.println("1. Menu\n2. Order\n3. Exit");
