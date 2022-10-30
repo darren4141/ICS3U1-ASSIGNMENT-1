@@ -5,35 +5,79 @@
 //Java (ADD VERSION NUMBER)
 //====================================================================================================================================================================
 //Problem definition: 	Help the sales staff determine the price of a bubble tea order, including multiple similar or different items based on the customer's
-//						specifications. The program must ask for the customer's name, type of tea, type of topping, number of teas, flavours, and toppings
+//						specifications. The program must ask for the customer's name, type of tea, type of topping, number of teas, flavours, and toppings. 
+//                      Output a reciept at the end including all order information and price calculations
 
-//Input: Name, Type of tea, flavour of tea, topping choice, size choice
+//Input:                Name
+//                      Type of tea
+//                      Flavour of tea 
+//                      Topping choice
+//                      Size choice
+//                      Tip amount choice
 
-//Output: Receipt including all of the orders, user friendly prompts (Welcome, what would you like?), menu with all options and prices
+//Output:               Receipt including all of the orders, phone number, store name, all of the prices, tax and tip calculations
+//                      User friendly prompts (Welcome, what would you like?) with the user's name to make the program more personal
+//                      Menu with all options and prices
+//                      'Funny' prompts each time a user chooses a topping
+//                      List of choices for the user                      
 
 //====================================================================================================================================================================
-//List of variables: 	any double constant with 'PRICE' at the end = the constant price of such item. The base cost comes from TEAPRICE, MILKTEAPRICE, and BLENDPRICE. 
-// 						all other 'PRICE' variables have lower numbers as they are intended to be modifiers to the base price, which is why some of them are 0
-// 						any int nonconstant with 'Choice' at the end is a variable used for switch/case operations
-//						any String nonconstant starting with 'string' and ending with 'choice' is a String variable used to store the type of choice the user makes
+//List of variables: 	Any double constant with 'PRICE' at the end = the constant price of such item. BURGEROILPRICE, CRUDEOILPRICE, OLIVEOILPRICE,
+//                      RAINWATERPRICE, DISINFECTANTPRICE, SALTWATERPRICE, INKPRICE, EWAGEWASTEPRICE, and SOAPPRICE are base price variables meaning 
+//                      that they make up the majority of the cost and the other price variables add onto them
+
+// 						All other 'PRICE' variables have lower numbers as they are intended to be modifiers to the base price, which is why some of them may be 0
+
+//                      The 'PRICE' variables with 'SIZE' at the front are modifiers for the final price, and are meant to be multiplied by the price of the drink
+
+// 						Any int nonconstant with 'Choice' at the end is a variable used for switch/case operations
+
+//						Any String nonconstant starting with 'string' and ending with 'choice' is a String variable used to store the type of choice the user makes
 //						in order to display it later on the reciept
+
+//                      chosen = a boolean variable used in every switch case in combination with a do-while construct to ensure that when the default case is triggered
+//                      the loop runs again and the user can input again
+
+//                      numOfToppings = user inputted variable that tells the 'flavour' for loop how many times to iterate
+
 //						drinkPrice = a double variable used to store the accumulative price of the drink as the user chooses more things about their tea
-//						baseTea = a 
+
+//                      totalPrice = an accumulative variable used to store the combined price of all of the drinks
+
+//                      TAX = tax rate multiplier stored in a constant
+
+//                      hst, tipAmount, total = variables used for math calculations at the end of the program
+
+//                      tipChoice = the amount the user chooses to tip
+
+//                      name = the user's name
+
 //						SHOPNAME = the name of the shop, stored in a constant in case of any spontaneous rebrands
-//						a String variable used to store the name of the order, it is added onto throughout the program
+
+//                      PHONENUM = the shop's phone number, stored in a constant in case of any spontaneous changes
+
+//						baseTea = a String variable used to store the name of the order, it is added onto throughout the program
+
+//                      reciept = a String variable that stores all of the baseTea variables after each order is made
+
+//                      special = a String variable that stores the name of the special flavour of the day
+//                      specialNumber = an int variable that stores the number of the special flavour of the day
+//                      NOTE: special and specialNumber are NOT constants because that will cause dead code errors and always true conditions. 
+//                      The variables are meant to be manually changed every day, which is very simple, as it is just changing the names of two variables
 //====================================================================================================================================================================
 
 
 import java.io.*;
 import java.text.DecimalFormat;
-public class BaseSolve {
-	
+public class Assignment1{
+
+    //BASE SOLVE
 	public static void main (String[]args) throws IOException{//start of main method
 		
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));//declare BufferedReader object named br
 		DecimalFormat moneyFormat = new DecimalFormat(".00");//declare DecimalFormat object named moneyFormat, meant for formatting money, it will format to two decimal places
 		
-		//variables explained at the top
+		//ALL VARIABLES EXPLAINED AT THE TOP
         boolean chosen;
 
 		int mainChoice=0, liquidChoice, typeThinLiquidChoice, typeThickLiquidChoice, toppingChoice, marbleColourChoice, flavourChoice, sizeChoice, typeOilChoice; 
@@ -45,6 +89,7 @@ public class BaseSolve {
         double tipPercentage = 0;
 		double hst, tipAmount, total; 
 
+        String name;
 		String stringToppingChoice = "", stringSizeChoice = "", stringFlavourChoice="", stringTypeBaseLiquidChoice="";
 		String stringToppings = "";
         String baseTea = "";
@@ -66,8 +111,10 @@ public class BaseSolve {
 		
 		//WELCOME
         System.out.println("Welcome to "+SHOPNAME+"!");
+        System.out.println("What is your name?");
+        name = br.readLine();
 
-		System.out.println("What would you like today!");
+		System.out.println("Welcome "+name+"! What would you like today?");
         System.out.println("The special of the day today is: "+special);
 		System.out.println("1. Menu\n2. Order\n3. Exit");
 		mainChoice = Integer.parseInt(br.readLine()); //input choice
@@ -78,6 +125,7 @@ public class BaseSolve {
 				case 1://chose to view menu
 					
 					//MENU - DISPLAYS ALL FLAVOURS AND PRICES
+                    //format all prices to two decimal places
 					System.out.println("MENU");
 					System.out.println("\nTYPE:");
 					System.out.println(".-------------------------------------------------------.");
@@ -136,7 +184,7 @@ public class BaseSolve {
                     do{//for when the default case is triggered, selection will run again. If a valid option is chosen, this will run once
                         chosen = true;
                         System.out.println("-----------------------------------------------");
-                        System.out.println("What type of liquid would you like today?");//UFP
+                        System.out.println("What type of liquid would you like today "+name+"?");//UFP
                         System.out.println("1. Oil\n2. Thin liquid\n3. Thick liquid");
                         liquidChoice = Integer.parseInt(br.readLine());//input option for which type of liquid they would like
                         switch(liquidChoice){//switch case of type of liquid
@@ -176,7 +224,7 @@ public class BaseSolve {
                                             break;
                                             
                                         default:
-                                            System.out.println("Stop messing around and select a valid option before I kick you out of the store");//UFP if they don't select a menu option
+                                            System.out.println("Listen here "+name+", stop messing around and select a valid option before I kick you out of the store");//UFP if they don't select a menu option
                                             chosen = false;
                                     }
                                 }while(!chosen);
@@ -187,8 +235,8 @@ public class BaseSolve {
                                 do{
                                     chosen = true;
                                     System.out.println("-----------------------------------------------");
-                                    System.out.println("On a diet today?");
-                                    System.out.println("What type of thin liquid would you like today?");//UFP
+                                    System.out.println("On a diet today "+name+"?");
+                                    System.out.println("What type of thin liquid would you like?");//UFP
                                     System.out.println("1. Rainwater\t+"+moneyFormat.format(RAINWATERPRICE));
                                     System.out.println("2. Disinfectant\t+"+moneyFormat.format(DISINFECTANTPRICE));
                                     System.out.println("3. Saltwater\t+"+moneyFormat.format(SALTWATERPRICE));
@@ -212,13 +260,13 @@ public class BaseSolve {
                                                 break;
                                                 
                                             case 3://CHOSE SALTWATER
-                                                System.out.println("What is wrong with you?");
+                                                System.out.println("What is wrong with you "+name);
                                                 stringTypeBaseLiquidChoice = "saltwater";
                                                 drinkPrice += SALTWATERPRICE ;
                                                 break;
                                                 
                                             default:
-                                                System.out.println("Stop messing around and select a valid option before I kick you out of the store");//UFP if they don't select a menu option
+                                                System.out.println("Listen here "+name+", stop messing around and select a valid option before I kick you out of the store");//UFP if they don't select a menu option
                                                 chosen = false;
                                     }//end of type of tea switch case
                                 }while(!chosen);
@@ -230,8 +278,8 @@ public class BaseSolve {
                                 do{
                                     chosen = true;
                                     System.out.println("-----------------------------------------------");
-                                    System.out.println("Make sure you take a thicker straw for these thick liquids!");
-                                    System.out.println("What type of thick liquid would you like?");//UFP
+                                    System.out.println("Thick liquids are better for your throat.");
+                                    System.out.println("What type of thick liquid would you like "+name+"?");//UFP
                                     System.out.println("1. Ink\t\t+"+moneyFormat.format(INKPRICE));
                                     System.out.println("2. Sewage waste\t+"+moneyFormat.format(SEWAGEWASTEPRICE));
                                     System.out.println("3. Soap\t\t+"+moneyFormat.format(SOAPPRICE));
@@ -261,7 +309,7 @@ public class BaseSolve {
                                                 break;
 
                                             default:
-                                            System.out.println("Stop messing around and select a valid option before I kick you out of the store");//UFP if they don't select a menu option
+                                            System.out.println("Listen here "+name+", stop messing around and select a valid option before I kick you out of the store");//UFP if they don't select a menu option
                                             chosen = false;
                                         }//end of thick liquid switch case
                                 }while(!chosen);
@@ -269,7 +317,7 @@ public class BaseSolve {
                                 break;
 
                                 default:
-                                    System.out.println("Stop messing around and select a valid option before I kick you out of the store");//UFP if they don't select a menu option
+                                    System.out.println("Listen here "+name+", stop messing around and select a valid option before I kick you out of the store");//UFP if they don't select a menu option
                                     chosen = false;
                         }//Done choosing type of tea
 
@@ -284,7 +332,7 @@ public class BaseSolve {
                     do{
                         chosen = true;
                         System.out.println("-----------------------------------------------");
-                        System.out.println("It's time to choose from our delicious flavours!");
+                        System.out.println(name+", guess what time it is. It's time to choose from our delicious flavours!");
                         System.out.println("What flavour would you like?");//UFP
                         System.out.println(special+" is 50% off today!");
                         System.out.println("1. Cheese\t+" + moneyFormat.format(CHEESEPRICE));
@@ -300,7 +348,7 @@ public class BaseSolve {
                         switch(flavourChoice){//switch case for menu choice of flavour
                         
                             case 1:// CHOSE CHEESE
-                                System.out.println("Some people will eat cheese with anything...");
+                                System.out.println("I guess "+name+" is one of those people will eat cheese with anything...");
                                 stringFlavourChoice = "Cheese";
                                 if(specialNumber == 1) {
                                     System.out.println(special+ " is 50% off today!");
@@ -308,7 +356,8 @@ public class BaseSolve {
                                 }else{
                                     drinkPrice += CHEESEPRICE;
                                 }
-                                
+                                break;
+
                             case 2://CHOSE KETCHUP
                                 System.out.println("I wonder if you actually like this stuff");
                                 stringFlavourChoice = "Ketchup";
@@ -318,7 +367,8 @@ public class BaseSolve {
                                 }else{
                                     drinkPrice += KETCHUPPRICE;
                                 }
-                                
+                                break;
+
                             case 3://CHOSE ALUMINIUM
                                 System.out.println("This is good if you like the taste of day-old gum");
                                 stringFlavourChoice = "Aluminium";
@@ -342,7 +392,7 @@ public class BaseSolve {
                                 break;
                                 
                             case 5://CHOSE SRIRACHA
-                                System.out.println("Okay we get it, you have good spice tolerance");
+                                System.out.println("Hey everyone, "+name+" good spice tolerance! Suprising. No one cares.");
                                 stringFlavourChoice = "Sriracha";
                                 if(specialNumber == 5) {
                                     System.out.println(special+ " is 50% off today!");
@@ -353,7 +403,7 @@ public class BaseSolve {
                                 break;
                                 
                             case 6://CHOSE SPOILED MILK
-                                System.out.println("Please sign this waiver");
+                                System.out.println("Alright "+name+" i'm gonna need you to sign this waiver");
                                 stringFlavourChoice = "Spoiled milk";
                                 if(specialNumber == 6) {
                                     System.out.println(special+ " is 50% off today!");
@@ -372,19 +422,21 @@ public class BaseSolve {
                                 }else{
                                     drinkPrice += MOLDPRICE;
                                 }
-                                
+                                break;
+
                             case 8://CHOSE FISH
-                                System.out.println("Lucky you! I caught this one this morning");
+                                System.out.println("Lucky you "+name+"! I caught this one this morning");
                                 stringFlavourChoice = "Fish";
                                 if(specialNumber == 7) {
                                     System.out.println(special+ " is 50% off today!");
                                     drinkPrice += (FISHPRICE)/2;
                                 }else{
                                     drinkPrice += FISHPRICE;
-                                }
+                                }                                
+                                break;
                                 
                             default:
-                            System.out.println("Stop messing around and select a valid option before I kick you out of the store");//UFP if they don't select a menu option
+                            System.out.println("Listen here "+name+", stop messing around and select a valid option before I kick you out of the store");//UFP if they don't select a menu option
                             chosen = false;                        
                         }//end of flavour switch case
                     }while(!chosen);
@@ -394,7 +446,7 @@ public class BaseSolve {
 					
 					//CHOOSE TOPPINGS
                     System.out.println("-----------------------------------------------");
-					System.out.println("How many toppings would you like? <max 5>");//UFP
+					System.out.println("How many toppings would you like "+name+"? <max 5>");//UFP
                     numOfToppings = Integer.parseInt(br.readLine());
                     
                     for(int i = 1; i <= numOfToppings; i++){
@@ -420,19 +472,19 @@ public class BaseSolve {
                                 break;
                                 
                             case 2://CHOSE TYLENOL
-                                System.out.println("Bad headache?");
+                                System.out.println("Bad headache "+name+"?");
                                 stringToppingChoice = "Tylenol";
                                 drinkPrice += TYLENOLPRICE;
                                 break;
                                 
                             case 3://CHOSE ASSORTED CUBED MEAT
-                                System.out.println("You don't need this much protien");
+                                System.out.println("You don't need this much protien "+name);
                                 stringToppingChoice = "assorted cubed meat";
                                 drinkPrice += ASSORTEDCUBEDMEATPRICE;
                                 break;
                                 
                             case 4://CHOSE CUCUMBER
-                                System.out.println("This one is actually pretty normal, so we're gonna give you only the seeds");
+                                System.out.println("This one is actually pretty normal");
                                 stringToppingChoice = "cucumber";
                                 drinkPrice += CUCUMBERPRICE;
                                 break;
@@ -453,34 +505,34 @@ public class BaseSolve {
                                 switch(marbleColourChoice){//switch case for menu choice
                                 
                                     case 1:// CHOSE RED
-                                        System.out.println("Red is also my favourite colour!");
+                                        System.out.println("no way "+name+"! red is also my favourite colour!");
                                         stringToppingChoice = "red marbles";
                                         break;
                                         
                                     case 2:// CHOSE BLUE
-                                        System.out.println("Blue is also my favourite colour!");
+                                        System.out.println("no way "+name+"! blue is also my favourite colour!");
                                         stringToppingChoice = "blue marbles";
                                         break;
                                         
                                     case 3:// CHOSE YELLOW
-                                        System.out.println("Yellow is also my favourite colour!");
+                                        System.out.println("no way "+name+"! yellow is also my favourite colour!");
                                         stringToppingChoice = "yellow marbles";
                                         break;
                                         
                                     case 4://CHOSE MULTICOLOURED
-                                        System.out.println("I'm also indecisive!");
+                                        System.out.println("It's okay "+name+", I'm also indecisive");
                                         stringToppingChoice = "multicoloured marbles";
                                         break;
                                         
                                     default:
-                                        System.out.println("Stop messing around and select a valid option before I kick you out of the store");//UFP if they don't select a menu option
+                                        System.out.println("Listen here "+name+", stop messing around and select a valid option before I kick you out of the store");//UFP if they don't select a menu option
                                         i--;//in invalid option is entered, the counted loop will run again to account for missing topping
                                 }//end of EXPLODING PEARL switch case
                                 
                                 break;
                                 
                             default:
-                                System.out.println("Stop messing around and select a valid option before I kick you out of the store");//UFP if they don't select a menu option
+                                System.out.println("Listen here "+name+", stop messing around and select a valid option before I kick you out of the store");//UFP if they don't select a menu option
                                 i--;//in invalid option is entered, the counted loop will run again to account for missing topping
 
                         }//end of TOPPINGS switch case
@@ -503,7 +555,7 @@ public class BaseSolve {
                     do{
                         chosen = true;
                         System.out.println("-----------------------------------------------");
-                        System.out.println("Almost done!");
+                        System.out.println("Almost done "+name+"!");
                         System.out.println("What size would you like today?");//UFP
                         System.out.println("Final cost is multiplied based on size");
                         System.out.println("1. Needle's worth (3mL)(needle included)\tx" + moneyFormat.format(SIZENEEDLEPRICE));
@@ -526,42 +578,43 @@ public class BaseSolve {
                             break;
                             
                         case 3://CHOSE BATHTUB
-                            System.out.println("Feeding a whole party are we?");
+                            System.out.println("Feeding a whole party are we "+name+"?");
                             stringSizeChoice = "A bathtub full of";
                             drinkPrice += SIZEBATHTUBPRICE;
                             break;
                             
                         default:
-                            System.out.println("Please select a valid option");//UFP if they don't select a menu option
+                            System.out.println("Listen here "+name+", stop messing around and select a valid option before I kick you out of the store");//UFP if they don't select a menu option
                             chosen = false;
                         }//end of switch case
                         
-                        baseTea = stringSizeChoice + " " + baseTea;//update base tea with size chosen
+                        baseTea = stringSizeChoice + baseTea;//update base tea with size chosen
                     }while(!chosen);
 
 
                     System.out.println("-----------------------------------------------");
-					System.out.println("You ordered a: " + baseTea);//UFP
+					System.out.println(name+", you ordered a: " + baseTea);//UFP
 					System.out.println("Your total cost is: $" + moneyFormat.format(drinkPrice));//UFP
 					
 					break;
 					
 										
 				case 3://USER CHOOSES TO EXIT
-					System.out.println("Goodbye");
+					System.out.println("Goodbye "+name+"! We expect to see you again!");
 					break;
 					
 				default:
-                System.out.println("Stop messing around and select a valid option before I kick you out of the store");//UFP if they don't select a menu option
+                System.out.println("Listen here "+name+", stop messing around and select a valid option before I kick you out of the store");//UFP if they don't select a menu option
 				
 			}
 			
             if(mainChoice ==2){//we dont want to update the reciept if they looked at the menu or decided to exit
-                reciept = reciept + baseTea + "\n>>$" + moneyFormat.format(drinkPrice) + "\n";//data from this order is stored in reciept variable
+                reciept = reciept + name + "'s order: \n" +baseTea + "\n>>$" + moneyFormat.format(drinkPrice) + "\n";//data from this order is stored in reciept variable
             }
             totalPrice += drinkPrice;
 
             //SET ALL VARIABLES TO 0 OR EMPTY SO THAT DATA IS NOT CARRIED OVER BETWEEN ORDERS
+            name = "";
             baseTea = "";
             drinkPrice = 0;
             stringToppingChoice = "";
@@ -579,27 +632,33 @@ public class BaseSolve {
             sizeChoice = 0;
             typeOilChoice = 0;
 			
-			System.out.println("Welcome to "+SHOPNAME+"! What would you like today!");//rerun welcome prompt before while loop ends
-			System.out.println("1. Menu\n2. Order a drink\n3. Exit");
-			mainChoice = Integer.parseInt(br.readLine());//input main choice
+            System.out.println("Welcome to "+SHOPNAME+"!");
+            System.out.println("What is your name?");
+            name = br.readLine();
+    
+            System.out.println("Welcome "+name+"! What would you like today?");
+            System.out.println("The special of the day today is: "+special);
+            System.out.println("1. Menu\n2. Order\n3. Exit");
+            mainChoice = Integer.parseInt(br.readLine()); //input choice
 
 		}
 		
-		System.out.println("That's everything for today?");//goodbye message
+		System.out.println("That's everything for today "+name+"?");//goodbye message
 
         System.out.println("You feel the cashier's stare burn into you...");//the Ontario special
+        System.out.println("Go ahead and tip "+name+"!");//the Ontario special
         System.out.println("TIP: ");
         System.out.println("1. Good. (10%)");
         System.out.println("2. Great! (15%)");
         System.out.println("3. Amazing! (20%)");
         System.out.println("4. Wonderful! (25%)");
         System.out.println("5. Choose custom amount");
-        tipChoice = Integer.parseInt(br.readLine());
+        tipChoice = Integer.parseInt(br.readLine());//input tip choice option
 
         switch(tipChoice){//switch case for tip amount choice
 
             case 1:
-                tipPercentage = 0.1;
+                tipPercentage = 0.1;//set tip percentage based on choice
                 break;
             case 2:
                 tipPercentage = 0.15;
@@ -611,12 +670,13 @@ public class BaseSolve {
                 tipPercentage = 0.25;
                 break;
             case 5:
-                System.out.print("How much would you like to tip? <don't add a % sign>");
-                tipPercentage = Integer.parseInt(br.readLine());
-                tipPercentage /= 100;
+                System.out.println("How much would you like to tip? Not zero right "+name+"? I have a family to feed");
+                System.out.print("<don't add a % sign>");
+                tipPercentage = Integer.parseInt(br.readLine());//let them choose their percentage
+                tipPercentage /= 100;//convert percentage to decimal for operation
                 break;
             default:
-                System.out.println("Stop messing around and select a valid option before I kick you out of the store");//UFP if they don't select a menu option
+                System.out.println("Listen here "+name+", stop messing around and select a valid option before I kick you out of the store");//UFP if they don't select a menu option
         }//end of tip choice switch
 
         //calculate tax, tip, total
@@ -634,7 +694,7 @@ public class BaseSolve {
         System.out.println("===========================================================================");
 		System.out.println(reciept);//our compounded variable containing all orders
         System.out.println("===========================================================================");
-        System.out.println("Subtotal total: $"+moneyFormat.format(totalPrice));
+        System.out.println("Subtotal total: $"+moneyFormat.format(totalPrice));//format to two decimal places
         System.out.println("HST: $"+moneyFormat.format(hst));
         System.out.println("Tip: $"+moneyFormat.format(tipAmount));
         System.out.println("Total: $"+moneyFormat.format(total));
