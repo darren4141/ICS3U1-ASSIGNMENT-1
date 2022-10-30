@@ -33,7 +33,6 @@ public class ExtensionArraysAndFunctions{
         String stringToppings = "";
 
         int mainChoice;
-
         //MENU CHOICE VARIABLES
         int typeBaseChoice;
 
@@ -125,7 +124,7 @@ public class ExtensionArraysAndFunctions{
             thinLiquidMainMessage = "On a diet today "+name+"?\nWhat type of thin liquid would you like?";
             thickLiquidMainMessage = "Thick liquids are better for your throat.\nWhat type of thick liquid would you like " +name+"?";
             flavourMessages[0] = "I guess "+name+" is one of those people will eat cheese with anything...";
-            flavourMessages[4] = "Hey everyone, "+name+" good spice tolerance! Suprising. No one cares.";
+            flavourMessages[4] = "Hey everyone, "+name+" has good spice tolerance! Suprising. No one cares.";
             flavourMessages[5] = "Alright "+name+" i'm gonna need you to sign this waiver";
             flavourMessages[7] = "Lucky you "+name+"! I caught this one this morning";
             flavourMainMessage = name+", guess what time it is. It's time to choose from our delicious flavours!\nWhat flavour would you like?";
@@ -133,9 +132,17 @@ public class ExtensionArraysAndFunctions{
             toppingMessages[2] = "You don't need this much protien "+name;
             sizeMessages[2] = "Feeding a whole party are we "+name+"?";
             sizeMainMessage = "Almost done "+name+"!\nWhat size would you like today?\nFinal cost is multiplied based on size";
-            
+
             switch(mainChoice){
                 case 1:
+                    System.out.println("MENU:");
+                    printMenu(3, "OILS", OILMENU, OILPRICES, false);
+                    printMenu(3, "THIN LIQUIDS", THINLIQUIDMENU, THINLIQUIDPRICES, false);
+                    printMenu(3, "THICK LIQUIDS", THICKLIQUIDMENU, THICKLIQUIDPRICES, false);
+                    printMenu(8, "FLAVOURS", FLAVOURMENU, FLAVOURPRICES, false);
+                    printMenu(5, "TOPPINGS", TOPPINGMENU, TOPPINGPRICES, false);
+                    printMenu(3, "SIZES", SIZEMENU, SIZEPRICES, true);
+
                     break;
                 case 2:
                     do{
@@ -179,7 +186,11 @@ public class ExtensionArraysAndFunctions{
                     //if statement for grammar
 
                     baseTea = orderMenu(3, SIZES, SIZEMENU, sizeMessages, SIZEPRICES, sizeMainMessage, true) +" "+ baseTea;
+                    System.out.println("-----------------------------------------------");
+                    System.out.println(name+", you ordered a: " + baseTea);//UFP
+                    System.out.println("Your total cost is: $" + moneyFormat.format(drinkPrice));//UFP
                     break;
+                    
                 case 3:
                     System.out.println("Goodbye "+name+"! We expect to see you again!");
                     break;
@@ -187,12 +198,7 @@ public class ExtensionArraysAndFunctions{
                 default:
                     System.out.println("Listen here "+name+", stop messing around and select a valid option before I kick you out of the store");//UFP if they don't select a menu option
 
-
             }
-
-            System.out.println("-----------------------------------------------");
-            System.out.println(name+", you ordered a: " + baseTea);//UFP
-            System.out.println("Your total cost is: $" + moneyFormat.format(drinkPrice));//UFP
 
             if(mainChoice == 2){//we dont want to update the reciept if they looked at the menu or decided to exit
                 reciept = reciept + name + "'s order: \n" +baseTea + "\n>>$" + moneyFormat.format(drinkPrice) + "\n";//data from this order is stored in reciept variable
@@ -382,6 +388,7 @@ public class ExtensionArraysAndFunctions{
     static void printMenu(int length, String type, String[] menu, double[] prices, boolean isMultiplier){
         System.out.println(type);
 
+        System.out.println("------------------------------------------------------------");
         for(int i = 0; i <length; i++){
             if(!isMultiplier){
                 System.out.println((i+1)+". "+menu[i]+"\t+$"+moneyFormat.format(prices[i]));
@@ -389,58 +396,7 @@ public class ExtensionArraysAndFunctions{
                 System.out.println((i+1)+". "+menu[i]+"\tx"+moneyFormat.format(prices[i]));
             }
         }
-        /* 
-        System.out.println("MENU");
-        System.out.println("\nTYPE:");
-        System.out.println(".-------------------------------------------------------.");
-        System.out.println("|1. Oil\t\t\tBurger oil\t|+$"+moneyFormat.format(BURGEROILPRICE)+"\t|");
-        System.out.println("|\t\t\tOlive oil\t|+$"+moneyFormat.format(OLIVEOILPRICE)+"\t|");
-        System.out.println("|\t\t\tCrude oil\t|+$"+moneyFormat.format(CRUDEOILPRICE)+"\t|");
-        System.out.println("|-------------------------------------------------------|");
-        System.out.println("|2. Thin Liquids\tRainwater\t|+$"+moneyFormat.format(RAINWATERPRICE)+"\t\t|");
-        System.out.println("|\t\t\tDisinfectant\t|+$"+moneyFormat.format(DISINFECTANTPRICE)+"\t|");
-        System.out.println("|\t\t\tSaltwater\t|+$"+moneyFormat.format(SALTWATERPRICE)+"\t\t|");
-        System.out.println("|-------------------------------------------------------|");
-        System.out.println("|3. Thick liquids\tInk\t\t|+$"+moneyFormat.format(INKPRICE)+"\t|");
-        System.out.println("|\t\t\tSewage waste\t|+$"+moneyFormat.format(SEWAGEWASTEPRICE)+"\t\t|");
-        System.out.println("|\t\t\tSoap\t\t|+$"+moneyFormat.format(SOAPPRICE)+"\t|");
-        System.out.println("'-------------------------------------------------------'");
-        
-        System.out.println("\nFLAVOURS:");
-        System.out.println(special+" is 50% off today!");
-        System.out.println(".---------------------------------------.");
-        System.out.println("|1. Cheese\t\t\t|+$" + moneyFormat.format(CHEESEPRICE)+"\t|");
-        System.out.println("|2. Ketchup\t\t\t|+$" + moneyFormat.format(KETCHUPPRICE)+"\t|");
-        System.out.println("|3. Aluminium\t\t\t|+$" + moneyFormat.format(ALUMINIUMPRICE)+"\t|");
-        System.out.println("|4. Pickle\t\t\t|+$" + moneyFormat.format(PICKLEPRICE)+"\t|");
-        System.out.println("|5. Sriracha\t\t\t|+$" + moneyFormat.format(SRIRACHAPRICE)+"\t|");
-        System.out.println("|6. Spoiled milk\t\t|+$" + moneyFormat.format(SPOILEDMILKPRICE)+"\t|");
-        System.out.println("|7. Mold\t\t\t|+$" + moneyFormat.format(MOLDPRICE)+"\t|");
-        System.out.println("|8. Fish\t\t\t|+$" + moneyFormat.format(FISHPRICE)+"\t|");
-        System.out.println("'---------------------------------------'");
-
-        System.out.println("\nTOPPINGS:");
-        System.out.println(".---------------------------------------.");
-        System.out.println("|1. Wood chips\t\t\t|+$" + moneyFormat.format(WOODCHIPPRICE)+"\t|");
-        System.out.println("|2. Tylenol\t\t\t|+$" + moneyFormat.format(TYLENOLPRICE)+"|");
-        System.out.println("|3. Assorted cubed meat\t\t|+$" + moneyFormat.format(ASSORTEDCUBEDMEATPRICE)+"\t|");
-        System.out.println("|4. Cucumber\t\t\t|+$" + moneyFormat.format(CUCUMBERPRICE)+"\t|");
-        System.out.println("|5. Chalk\t\t\t|+$" + moneyFormat.format(CHALKPRICE)+"\t|");
-        System.out.println("|6. Marbles\t\t\t|+$" + moneyFormat.format(MARBLEPRICE)+"\t|");
-        System.out.println("|\tRed\t\t\t\t|");
-        System.out.println("|\tYellow\t\t\t\t|");
-        System.out.println("|\tBlue\t\t\t\t|");
-        System.out.println("|\tMulticoloured\t\t\t|");
-        System.out.println("'---------------------------------------'");
-        
-        System.out.println("\nSIZES: Final cost is multiplied based on size");
-        System.out.println(".-------------------------------------------------------.");
-        System.out.println("|1. Needle's worth (3mL)(needle included)\t|x" + SIZENEEDLEPRICE+"\t|");
-        System.out.println("|2. Tablespoon\t\t\t\t\t|x" + SIZETABLESPOONPRICE+"\t|");
-        System.out.println("|3. Bathtub's worth (180L)(Bathtub included)\t|x" + SIZEBATHTUBPRICE+"\t|");
-
-        System.out.println("'-------------------------------------------------------'");
-        */
+        System.out.println("------------------------------------------------------------");
     }
     
     static void printReceipt(){

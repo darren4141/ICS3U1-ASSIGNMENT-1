@@ -573,7 +573,7 @@ public class Assignment1{
                         case 3://CHOSE BATHTUB
                             System.out.println("Feeding a whole party are we "+name+"?");
                             stringSizeChoice = "A bathtub full of";
-                            drinkPrice += SIZEBATHTUBPRICE;
+                            drinkPrice *= SIZEBATHTUBPRICE;
                             break;
                             
                         default:
