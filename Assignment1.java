@@ -104,7 +104,7 @@ public class Assignment1{
         final double INKPRICE = 20, SEWAGEWASTEPRICE = 1, SOAPPRICE = 10;
         final double TAX = 0.13;
 
-		final double CHEESEPRICE = 7, KETCHUPPRICE = 2, ALUMINIUMPRICE = 4, PICKLEPRICE = 3, SRIRACHAPRICE = 5, SPOILEDMILKPRICE = 7, MOLDPRICE = 0, FISHPRICE = 6;
+		final double CHEESEPRICE = 7, KETCHUPPRICE = 2, ALUMINIUMPRICE = 4, PICKLEPRICE = 3, SRIRACHAPRICE = 5, SPOILEDMILKPRICE = 7, MOLDPRICE = 1, FISHPRICE = 6;
 		final double WOODCHIPPRICE = 2, TYLENOLPRICE = 10, CHALKPRICE = 3, ASSORTEDCUBEDMEATPRICE = 5, CUCUMBERPRICE = 3, MARBLEPRICE = 6;
 		final double SIZENEEDLEPRICE = 0.5, SIZETABLESPOONPRICE = 1, SIZEBATHTUBPRICE = 100;
 		
@@ -180,7 +180,6 @@ public class Assignment1{
 					break;//break to avoid doing the default case
 					
 				case 2://CHOSE TO ORDER
-                    chosen = true;
                     do{//for when the default case is triggered, selection will run again. If a valid option is chosen, this will run once
                         chosen = true;
                         System.out.println("-----------------------------------------------");
@@ -190,7 +189,6 @@ public class Assignment1{
                         switch(liquidChoice){//switch case of type of liquid
                             
                             case 1://CHOSE OIL
-                                chosen = true;
                                 do{
                                     chosen = true;
                                     System.out.println("-----------------------------------------------");
@@ -231,7 +229,6 @@ public class Assignment1{
                                 break;
                                 
                             case 2://CHOSE THIN LIQUID
-                                chosen = true;
                                 do{
                                     chosen = true;
                                     System.out.println("-----------------------------------------------");
@@ -274,7 +271,6 @@ public class Assignment1{
                                 break;
 
                             case 3://CHOSE THICK LIQUID
-                                chosen = true;
                                 do{
                                     chosen = true;
                                     System.out.println("-----------------------------------------------");
@@ -327,8 +323,6 @@ public class Assignment1{
 
 					
 					//CHOOSE FLAVOUR
-
-                    chosen = true;
                     do{
                         chosen = true;
                         System.out.println("-----------------------------------------------");
@@ -551,7 +545,6 @@ public class Assignment1{
 
 
 					//CHOOSING SIZE
-                    chosen = true;
                     do{
                         chosen = true;
                         System.out.println("-----------------------------------------------");
