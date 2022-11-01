@@ -81,6 +81,8 @@ public class ExtensionArraysAndFunctions{
     static LinkedList<Integer> quantities = new LinkedList<Integer>();
     static LinkedList<String> orders = new LinkedList<String>();
     static LinkedList<Double> orderPrices = new LinkedList<Double>();
+    static LinkedList<String> currentItems = new LinkedList<String>();
+    static LinkedList<String> currentPrices = new LinkedList<String>();
    
     static final String PHONENUM = "647-BBL-TEA";
     static final String SHOPNAME = "Darren's delicious bubble tea";
@@ -101,7 +103,7 @@ public class ExtensionArraysAndFunctions{
  
  
     public static void main(String[]args) throws IOException{//main method
- 
+
         //GENERAL VARIABLES - EXPLAINED AT THE TOP
         final double TAX = 0.13;
         int amount = 0;
@@ -109,7 +111,9 @@ public class ExtensionArraysAndFunctions{
         int tipChoice = 0;
         String stringToppings = "";
         String addTopping;
-       
+        String refundChoice;
+        int refundItemNumber = 0;
+
         int mainChoice = 0;
        
         //MENU CHOICE VARIABLES
@@ -176,7 +180,7 @@ public class ExtensionArraysAndFunctions{
             "All done ordering toppings!"
         };
         final double [] TOPPINGPRICES = {2, 10, 5, 3, 3, 0};
-        final String TOPPINGMAINMESSAGE = "Choose a topping <or select \"none\" to stop";
+        final String TOPPINGMAINMESSAGE = "Choose a topping <or select \"no toppings\" to stop";
  
         //DECLARE SIZE GROUP VARIABLES
         final String[] SIZEMENU = {"Needle's worth (3mL)(needle included)", "Tablespoon(measuring cup included)", "Bathtub's worth (180L)(Bathtub included)"};
@@ -303,7 +307,7 @@ public class ExtensionArraysAndFunctions{
                     numOfToppings++;
                     addTopping = orderMenu(6, TOPPINGS, TOPPINGMENU, toppingMessages, TOPPINGPRICES, TOPPINGMAINMESSAGE, false);
                    
-                    if(!addTopping.equals("none")){
+                    if(!addTopping.equals("no toppings")){
                         if(numOfToppings == 1){
                             stringToppings = stringToppings + addTopping;
                         }else{
@@ -311,28 +315,38 @@ public class ExtensionArraysAndFunctions{
                         }
                     }
                    
-                    }while(!addTopping.equals("none"));
+                    }while(!addTopping.equals("no toppings"));
                    
-                    if(numOfToppings != 0) baseTea = baseTea + " with " + stringToppings; //update our baseTea variable, use the word "with" to make it sound better
+                    if(numOfToppings > 1) baseTea = baseTea + " with " + stringToppings; //update our baseTea variable, use the word "with" to make it sound better
                     //if statement for grammar
  
                     baseTea = orderMenu(3, SIZES, SIZEMENU, sizeMessages, SIZEPRICES, sizeMainMessage, true) +" "+ baseTea;
                     //call orderMenu function with the return type String, it will return what the user ordered and we can directly add it to our baseTea string
-                    System.out.println("-----------------------------------------------");
-                    System.out.println(name+", you ordered " + amount + ": " + baseTea);//UFP
+                    System.out.println(name+", you ordered a: " + baseTea);//UFP
+
+                    System.out.println(".--------------------------------------------------.");
+                    System.out.printf("|%-40s |%-8s|%n", "Addition:", "Price");
+                    System.out.println("|-----------------------------------------+--------|");
+
+                    for(int i = 0; i < currentItems.size(); i++){
+                        System.out.printf("|%-40s |%-8s|%n", currentItems.get(i), currentPrices.get(i));
+                    }
+                    System.out.println("'--------------------------------------------------'");
                     System.out.println("Your total cost is: $" + moneyFormat.format(drinkPrice));//UFP
-                   
+                    
                     do{
                     chosen = true;
                         System.out.println("How many of these would you like?");
-                   try{
-                       amount = Integer.parseInt(br.readLine());
-                   }catch(Exception e){
-                       System.out.println("Listen here "+name+", stop messing around and select a valid option before I kick you out of the store");//UFP if they don't select a menu option
-                       chosen = false;
-                   }
+                        try{
+                            amount = Integer.parseInt(br.readLine());
+                        }catch(Exception e){
+                            System.out.println("Listen here "+name+", stop messing around and select a valid option before I kick you out of the store");//UFP if they don't select a menu option
+                            chosen = false;
+                        }
                     }while(!chosen);
                    
+                    System.out.println("Alright, "+amount+" of these added to your order!");
+
                     break;
                    
                 case 3:
@@ -428,6 +442,41 @@ public class ExtensionArraysAndFunctions{
             total = totalPrice + hst + tipAmount;
      
             printReceipt();//printReceipt function just prints a formatted receipt
+
+            System.out.println("Would you like to refund any items? \ny: yes \nanything else: no");
+            refundChoice = br.readLine();
+            while(refundChoice.equals("y")){
+                System.out.println("Which item would you like to refund?");
+                for(int i = 0; i < orders.size(); i++){//iterate through the size of LinkedList order
+                    System.out.println((i+1)+". "+customerNames.get(i)+"'s order: ");//customerNames.get(i) will cover all of the elements in the array as the for loop iterates
+                    System.out.println(orders.get(i));//same idea as previous line
+                    System.out.println(">> QTY: "+quantities.get(i));//same idea as previous line
+                    System.out.println(">> $"+moneyFormat.format(orderPrices.get(i)));//same idea as previous line, but we use our moneyFormat object to format the decimal
+                }
+                refundItemNumber = Integer.parseInt(br.readLine());
+                refundItemNumber--;//SINCE ARRAY INDEXES START AT 0 AND OUR LIST STARTS AT 1
+
+                //REMOVE REFUNDED ITEMS FROM LINKEDLIST AND REMOVE REFUNDED COSTS FROM TOTALCOST
+                customerNames.remove(refundItemNumber);
+                orders.remove(refundItemNumber);
+                totalPrice -= orderPrices.get(refundItemNumber)*quantities.get(refundItemNumber);
+                quantities.remove(refundItemNumber);
+                orderPrices.remove(refundItemNumber);
+
+                //RECALCULATE TOTAL
+                hst = totalPrice * TAX;
+                tipAmount = totalPrice * tipPercentage;
+                total = totalPrice + hst + tipAmount;
+
+                System.out.println("Would you like to refund any items? \ny: yes \nanything else: no");
+                refundChoice = br.readLine();
+            }
+
+            System.out.println("Here is your final receipt!");
+            printReceipt();//printReceipt function just prints a formatted receipt
+
+            System.out.println("Thanks for coming to "+SHOPNAME);
+
         }else{
         System.out.println("Buy something next time!");//UFP
         }
@@ -474,10 +523,13 @@ public class ExtensionArraysAndFunctions{
                     if(length >= 1){
                         System.out.println(messages[0]);//display the message they see when they order this item
                         stringAdd = options[0]; //ready to return this value (the name of what they ordered)
+                        currentItems.add(menu[0]);
                         if(!isMultiplier){//if it is not a multiplier type:
                             drinkPrice += prices[0];//add to the total
+                            currentPrices.add("+$"+moneyFormat.format(prices[0]));
                         }else{//if not
                             drinkPrice *= prices[0];//multiply the total
+                            currentPrices.add("x"+moneyFormat.format(prices[0]));
                         }
                         break;//BREAK INSIDE THE IF STATEMENT - THIS IS IMPORTANT BECAUSE IF THEY ENTER SOMETHING LARGER THAN LENGTH, IT WON'T BREAK AND WILL TRIGGER THE DEFAULT CASE WHICH ERRORCHECKS
                     }
@@ -485,10 +537,13 @@ public class ExtensionArraysAndFunctions{
                     if(length >= 2){
                         System.out.println(messages[1]);
                         stringAdd = options[1];
+                        currentItems.add(menu[1]);
                         if(!isMultiplier){
                             drinkPrice += prices[1];
+                            currentPrices.add("+$"+moneyFormat.format(prices[1]));
                         }else{
                             drinkPrice *= prices[1];
+                            currentPrices.add("x"+moneyFormat.format(prices[1]));
                         }                        
                         break;
                     }                
@@ -496,10 +551,13 @@ public class ExtensionArraysAndFunctions{
                     if(length >= 3){
                         System.out.println(messages[2]);
                         stringAdd = options[2];
+                        currentItems.add(menu[2]);
                         if(!isMultiplier){
                             drinkPrice += prices[2];
+                            currentPrices.add("+$"+moneyFormat.format(prices[2]));
                         }else{
                             drinkPrice *= prices[2];
+                            currentPrices.add("x"+moneyFormat.format(prices[2]));
                         }
                         break;
                     }    
@@ -507,10 +565,13 @@ public class ExtensionArraysAndFunctions{
                     if(length >= 4){
                         System.out.println(messages[3]);
                         stringAdd = options[3];
+                        currentItems.add(menu[3]);
                         if(!isMultiplier){
                             drinkPrice += prices[3];
+                            currentPrices.add("+$"+moneyFormat.format(prices[3]));
                         }else{
                             drinkPrice *= prices[3];
+                            currentPrices.add("x"+moneyFormat.format(prices[3]));
                         }
                         break;
                     }    
@@ -518,10 +579,13 @@ public class ExtensionArraysAndFunctions{
                     if(length >= 5){
                         System.out.println(messages[4]);
                         stringAdd = options[4];
+                        currentItems.add(menu[4]);
                         if(!isMultiplier){
                             drinkPrice += prices[4];
+                            currentPrices.add("+$"+moneyFormat.format(prices[4]));
                         }else{
                             drinkPrice *= prices[4];
+                            currentPrices.add("x"+moneyFormat.format(prices[4]));
                         }
                         break;
                     }  
@@ -529,10 +593,13 @@ public class ExtensionArraysAndFunctions{
                     if(length >= 6){
                         System.out.println(messages[5]);
                         stringAdd = options[5];
+                        currentItems.add(menu[5]);
                         if(!isMultiplier){
                             drinkPrice += prices[5];
+                            currentPrices.add("+$"+moneyFormat.format(prices[5]));
                         }else{
                             drinkPrice *= prices[5];
+                            currentPrices.add("x"+moneyFormat.format(prices[5]));
                         }
                         break;
                     }  
@@ -540,10 +607,13 @@ public class ExtensionArraysAndFunctions{
                     if(length >= 7){
                         System.out.println(messages[6]);
                         stringAdd = options[6];
+                        currentItems.add(menu[6]);
                         if(!isMultiplier){
                             drinkPrice += prices[6];
+                            currentPrices.add("+$"+moneyFormat.format(prices[6]));
                         }else{
                             drinkPrice *= prices[6];
+                            currentPrices.add("x"+moneyFormat.format(prices[6]));
                         }
                         break;
                     }    
@@ -551,10 +621,13 @@ public class ExtensionArraysAndFunctions{
                     if(length >= 8){
                         System.out.println(messages[7]);
                         stringAdd = options[7];
+                        currentItems.add(menu[7]);
                         if(!isMultiplier){
                             drinkPrice += prices[7];
+                            currentPrices.add("+$"+moneyFormat.format(prices[7]));
                         }else{
                             drinkPrice *= prices[7];
+                            currentPrices.add("x"+moneyFormat.format(prices[7]));
                         }
                         break;
                     }    
@@ -646,10 +719,10 @@ public class ExtensionArraysAndFunctions{
         System.out.println("Tel: "+PHONENUM);//output PHONENUM constant
         System.out.println("===========================================================================");
         for(int i = 0; i < orders.size(); i++){//iterate through the size of LinkedList order
-       System.out.println(customerNames.get(i)+"'s order: ");//customerNames.get(i) will cover all of the elements in the array as the for loop iterates
-       System.out.println(orders.get(i));//same idea as previous line
-       System.out.println("QTY: "+quantities.get(i));//same idea as previous line
-       System.out.println(">> $"+moneyFormat.format(orderPrices.get(i)));//same idea as previous line, but we use our moneyFormat object to format the decimal
+            System.out.println(customerNames.get(i)+"'s order: ");//customerNames.get(i) will cover all of the elements in the array as the for loop iterates
+            System.out.println(orders.get(i));//same idea as previous line
+            System.out.println(">> QTY: "+quantities.get(i));//same idea as previous line
+            System.out.println(">> $"+moneyFormat.format(orderPrices.get(i)));//same idea as previous line, but we use our moneyFormat object to format the decimal
         }
        
         System.out.println("===========================================================================");
