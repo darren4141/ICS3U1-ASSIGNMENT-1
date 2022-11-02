@@ -39,7 +39,8 @@
  
 //                      choice = an int variable used to store the choice of the user and put it through the switch case
 //                      typeBaseChoice = an int variable used to store the user's choice of base liquid
- 
+//                      mainChoice = an int variable used to store the very first choice from the user (1. menu 2. order 3. exit)
+
 //                      numOfToppings = user inputed variable that tells the 'flavour' for loop how many times to iterate
 //                      stringToppings = a String used to store the list of toppings and format them nicely when the user orders multiple toppings
  
@@ -62,6 +63,12 @@
 //                      baseTea = a String variable used to store the name of the order, it is added onto throughout the program
  
 //                      specialNumber = an int variable that stores the number of the special flavour of the day. It is randomly generated
+
+//                      numberRefunded = user inputted number of bubble tea's to refund if the quantity of a refunded item is larger than 1
+
+//                      refundItemNumber = the index of the item the user wants to refund
+
+//                      stringAdd = a String variable inside of the orderMenu function that stores the String of the option to be added. The stringAdd variable is returned
  
 //                      LinkedLists:    customerNames: the names of the customers - to be outputted on the receipt
 //                                      orders: the orders of the customers - to be outputted on the receipt
@@ -112,16 +119,20 @@ public class ExtensionArraysAndFunctions{
         int amount = 0;
         int numOfToppings = 0;
         int tipChoice = 0;
+
+        //TOPPING VARIABLES
         String stringToppings = "";
         String addTopping;
+
+        //REFUND VARIABLES
         String refundChoice;
         int refundItemNumber = 0;
         int numberRefunded;
-
-        int mainChoice = 0;
        
         //MENU CHOICE VARIABLES
         int typeBaseChoice;
+        int mainChoice = 0;
+
  
         //DECLARE OIL GROUP VARIABLES
         final String [] OILMENU = {"Burger oil", "Crude oil", "Olive oil"};
@@ -218,9 +229,9 @@ public class ExtensionArraysAndFunctions{
            System.out.printf("|%-8s |%-40s |%n", "3.", "Exit");
            System.out.println("'---------------------------------------------------'");
            
-           try{
+           try{//try the input to catch when a string is inputted
            mainChoice = Integer.parseInt(br.readLine()); //input choice
-       }catch(Exception e){
+       }catch(Exception e){//triggers when a string is entered instead of an int
         System.out.println("Listen here "+name+", stop messing around and select a valid option before I kick you out of the store");//UFP if they don't select a menu option
            chosen = false;
        }
@@ -274,17 +285,16 @@ public class ExtensionArraysAndFunctions{
                         chosen = true; //loop won't run again as long as valid option is entered
                         System.out.println("What type of liquid would you like today "+name+"?");//UFP
                         System.out.println(".---------------------------------------------------.");
-                    System.out.printf("|%-8s |%-40s |%n", "OPTION", "MENU");//menu UFP using printf
+                        System.out.printf("|%-8s |%-40s |%n", "OPTION", "MENU");//menu UFP using printf
                         System.out.println("|---------+-----------------------------------------|");
                         System.out.printf("|%-8s |%-40s |%n", "1.", "Oil");
                         System.out.printf("|%-8s |%-40s |%n", "2.", "Thin liquid");
                         System.out.printf("|%-8s |%-40s |%n", "3.", "Thick liquid");
                         System.out.println("'---------------------------------------------------'");
  
-                        try{
+                        try{//try the input to catch when a string is inputted
                             typeBaseChoice = Integer.parseInt(br.readLine());//input option for which type of liquid they would like
-
-                        }catch(Exception e){
+                        }catch(Exception e){//triggers when a string is entered instead of an int
                             System.out.println("Listen here "+name+", stop messing around and select a valid option before I kick you out of the store");//UFP if they don't select a menu option
                             chosen = false;//run the do loop again if they entered an invalid option
                             continue;
@@ -311,19 +321,19 @@ public class ExtensionArraysAndFunctions{
                     baseTea = orderMenu(8, FLAVOURS, FLAVOURMENU, flavourMessages, FLAVOURPRICES, flavourMainMessage, false) + " " + baseTea;
 
                     numOfToppings = 0;
-                    do{
-                    numOfToppings++;
-                    addTopping = orderMenu(6, TOPPINGS, TOPPINGMENU, toppingMessages, TOPPINGPRICES, TOPPINGMAINMESSAGE, false);
-                   
-                    if(!addTopping.equals("no toppings")){
-                        if(numOfToppings == 1){
-                            stringToppings = stringToppings + addTopping;
-                        }else{
-                            stringToppings = stringToppings + ", " + addTopping;
+                    do{//loop toppings until "no toppings" is chosen
+                        numOfToppings++;
+                        addTopping = orderMenu(6, TOPPINGS, TOPPINGMENU, toppingMessages, TOPPINGPRICES, TOPPINGMAINMESSAGE, false);
+                    
+                        if(!addTopping.equals("no toppings")){//don't add the topping if they select "no toppings"
+                            if(numOfToppings == 1){//selection for grammar
+                                stringToppings = stringToppings + addTopping;
+                            }else{
+                                stringToppings = stringToppings + ", " + addTopping;
+                            }
                         }
-                    }
                    
-                    }while(!addTopping.equals("no toppings"));
+                    }while(!addTopping.equals("no toppings"));//keep running the loop until "no toppings" is chosen
                    
                     if(numOfToppings > 1) baseTea = baseTea + " with " + stringToppings; //update our baseTea variable, use the word "with" to make it sound better
                     //if statement for grammar
@@ -333,29 +343,34 @@ public class ExtensionArraysAndFunctions{
                     System.out.println(name+", you ordered a: " + baseTea);//UFP
 
                     System.out.println(".--------------------------------------------------.");
-                    System.out.printf("|%-40s |%-8s|%n", "Addition:", "Price");
+                    System.out.printf("|%-40s |%-8s|%n", "Addition:", "Price");//using printf to format nicely
                     System.out.println("|-----------------------------------------+--------|");
 
-                    for(int i = 0; i < currentItems.size(); i++){
-                        System.out.printf("|%-40s |%-8s|%n", currentItems.get(i), currentPrices.get(i));
+                    for(int i = 0; i < currentItems.size(); i++){//iterate through linked list
+                        System.out.printf("|%-40s |%-8s|%n", currentItems.get(i), currentPrices.get(i));//output all of the additions and their prices
                     }
                     System.out.println("'--------------------------------------------------'");
                     System.out.println("Your total cost is: $" + moneyFormat.format(drinkPrice));//UFP
                     
-                    do{
-                    chosen = true;
-                        System.out.println("How many of these would you like?");
-                        try{
+                    do{//loop for errorchecking
+                    chosen = true;//loop will always run once unless there is an exception
+                        System.out.println("How many of these would you like? <max 50>");
+                        try{//try the input to catch when a string is inputted
                             amount = Integer.parseInt(br.readLine());
-                        }catch(Exception e){
+                        }catch(Exception e){//triggers when a string is entered instead of an int
                             System.out.println("Listen here "+name+", stop messing around and select a valid option before I kick you out of the store");//UFP if they don't select a menu option
                             chosen = false;
                         }
-                    }while(!chosen);
-                   
-                    System.out.println("Alright, "+amount+" of these added to your order!");
+                        if(amount > 50){//errorchecking for exceptional values
+                            System.out.println("That's too many! Enter a smaller number");
+                            chosen = false;
+                        }
 
-                    break;
+                    }while(!chosen);//loop will run as long as chosen is false
+                   
+                    System.out.println("Alright, "+amount+" of these added to your order!");//UFP
+
+                break;//break from case 2
                    
                 case 3:
                     System.out.println("Goodbye "+name+"! We expect to see you again!");//UFP
@@ -388,58 +403,58 @@ public class ExtensionArraysAndFunctions{
             stringToppings = "";
            
             if(!name.equals("exit")){//don't run this prompt if they entered 'exit' as their name
-           System.out.println("Welcome "+name+"! What would you like today?");
-           System.out.println(".---------------------------------------------------.");//printf to make it look nice
-           System.out.printf("|%-8s |%-40s |%n", "OPTION", "ACTION");
-           System.out.println("|---------+-----------------------------------------|");
-           System.out.printf("|%-8s |%-40s |%n", "1.", "Menu");
-           System.out.printf("|%-8s |%-40s |%n", "2.", "Order");
-           System.out.printf("|%-8s |%-40s |%n", "3.", "Exit");
-           System.out.println("'---------------------------------------------------'");
+                System.out.println("Welcome "+name+"! What would you like today?");
+                System.out.println(".---------------------------------------------------.");//printf to make it look nice
+                System.out.printf("|%-8s |%-40s |%n", "OPTION", "ACTION");
+                System.out.println("|---------+-----------------------------------------|");
+                System.out.printf("|%-8s |%-40s |%n", "1.", "Menu");
+                System.out.printf("|%-8s |%-40s |%n", "2.", "Order");
+                System.out.printf("|%-8s |%-40s |%n", "3.", "Exit");
+                System.out.println("'---------------------------------------------------'");
 
-           do{
-            chosen = true;
-            try{
-                   mainChoice = Integer.parseInt(br.readLine()); //input choice  
-            }catch(Exception e){
-                   System.out.println("Listen here "+name+", stop messing around and select a valid option before I kick you out of the store");//UFP if they don't select a menu option
-                   chosen = false;
-            }
-            if(mainChoice > 3){
-        System.out.println("Listen here "+name+", stop messing around and select a valid option before I kick you out of the store");//UFP if they don't select a menu option
-           chosen = false;
-            }
-           }while(!chosen);
+                do{
+                    chosen = true;
+                    try{//try the input to catch when a string is inputted
+                        mainChoice = Integer.parseInt(br.readLine()); //input choice  
+                    }catch(Exception e){//triggers when a string is entered instead of an int
+                        System.out.println("Listen here "+name+", stop messing around and select a valid option before I kick you out of the store");//UFP if they don't select a menu option
+                        chosen = false;
+                    }
+                    if(mainChoice > 3){
+                        System.out.println("Listen here "+name+", stop messing around and select a valid option before I kick you out of the store");//UFP if they don't select a menu option
+                        chosen = false;
+                    }
+                }while(!chosen);
             }else{
-            mainChoice = 3;//set main choice to false so that while loop will not run
+                mainChoice = 3;//set main choice to false so that while loop will not run
             }
  
-        }
+        }//end of main while loop (mainChoice)
        
         if(orders.size() != 0){//don't ask them to tip if they didnt order anything
-           
+
             do{
-            chosen = true;
-                System.out.println("That's everything for today?");//goodbye message
-                System.out.println("You feel the cashier's stare burn into you...");//the Ontario special
-                System.out.println("Go ahead and tip!");//the Ontario special
-                System.out.println("TIP: ");
-                System.out.println("1. Good. (10%)");
-                System.out.println("2. Great! (15%)");
-                System.out.println("3. Amazing! (20%)");
-                System.out.println("4. Wonderful! (25%)");
-                System.out.println("5. Choose custom amount");
-           
-            try{
-                    tipChoice = Integer.parseInt(br.readLine());//input tip choice option
-            }catch(Exception e){
+                chosen = true;
+                    System.out.println("That's everything for today?");//goodbye message
+                    System.out.println("You feel the cashier's stare burn into you...");//the Ontario special
+                    System.out.println("Go ahead and tip!");//the Ontario special
+                    System.out.println("TIP: ");
+                    System.out.println("1. Good. (10%)");
+                    System.out.println("2. Great! (15%)");
+                    System.out.println("3. Amazing! (20%)");
+                    System.out.println("4. Wonderful! (25%)");
+                    System.out.println("5. Choose custom amount");
+            
+                try{//try the input to catch when a string is inputted
+                        tipChoice = Integer.parseInt(br.readLine());//input tip choice option
+                }catch(Exception e){//triggers when a string is entered instead of an int
+                        System.out.println("Listen here "+name+", stop messing around and select a valid option before I kick you out of the store");//UFP if they don't select a menu option
+                        chosen = false;
+                }
+                if(tipChoice > 5){
                     System.out.println("Listen here "+name+", stop messing around and select a valid option before I kick you out of the store");//UFP if they don't select a menu option
                     chosen = false;
-            }
-            if(tipChoice > 5){
-        System.out.println("Listen here "+name+", stop messing around and select a valid option before I kick you out of the store");//UFP if they don't select a menu option
-           chosen = false;
-            }
+                }
             }while(!chosen);
      
             tip(tipChoice);//function tipChoice calculates the tip percentage with one parameter
@@ -545,9 +560,9 @@ public class ExtensionArraysAndFunctions{
             }
             System.out.println("'--------------------------------------------------------------'");
            
-        try{
+        try{//try the input to catch when a string is inputted
             choice = Integer.parseInt(br.readLine());//input choice after menu is outputted
-        }catch(Exception e){//NumberFormatException
+        }catch(Exception e){//triggers when a string is entered instead of an int//NumberFormatException
             System.out.println("Listen here "+name+", stop messing around and select a valid option before I kick you out of the store");//UFP if they don't select a menu option
             chosen = false;//DO WHILE LOOP WILL RUN AGAIN
             continue;//don't need to run selection if input is invalid
@@ -694,27 +709,27 @@ public class ExtensionArraysAndFunctions{
                     break;
                 case 5:
                     do{
-                   System.out.println("How much would you like to tip? Not zero right "+name+"? I have a family to feed");
-                   System.out.print("<don't add a % sign>");
-                   
-                    chosen = true;
-                    try{
-                            tipPercentage = Integer.parseInt(br.readLine());//let them choose their percentage
-                    }catch(Exception e){
-                            System.out.println("Hey! Tipping shouldn't be treated as a joke. I work very hard");//UFP if they don't select a menu option
-                            chosen = false;
-                            continue;
-                    }
-                    if(tipPercentage < 0){
-                            System.out.println("Hey! Tipping shouldn't be treated as a joke. I work very hard");//UFP if they don't select a menu option
-                            chosen = false;
-                    }
+                        System.out.println("How much would you like to tip? Not zero right "+name+"? I have a family to feed");
+                        System.out.print("<don't add a % sign>");
+                        
+                            chosen = true;
+                            try{//try the input to catch when a string is inputted
+                                tipPercentage = Integer.parseInt(br.readLine());//let them choose their percentage
+                            }catch(Exception e){//triggers when a string is entered instead of an int
+                                System.out.println("Hey! Tipping shouldn't be treated as a joke. I work very hard");//UFP if they don't select a menu option
+                                chosen = false;
+                                continue;
+                            }
+                            if(tipPercentage < 0 || tipPercentage > 500){//errorcheck exceptional values, upper range is 500 because some very generous people might tip more than 100%
+                                System.out.println("Hey! Tipping shouldn't be treated as a joke. I work very hard");//UFP if they don't select a menu option
+                                chosen = false;
+                            }
                     }while(!chosen);
                     tipPercentage /= 100;//convert percentage to decimal for operation
                     break;
-                default:
-                    System.out.println("Listen here "+name+", stop messing around and select a valid option before I kick you out of the store");//UFP if they don't select a menu option
-                    chosen = false;//make it unable to exit the loop as they still need to input a valid option
+                    default:
+                        System.out.println("Listen here "+name+", stop messing around and select a valid option before I kick you out of the store");//UFP if they don't select a menu option
+                        chosen = false;//make it unable to exit the loop as they still need to input a valid option
             }//end of tip choice switch
         }while(!chosen);//while option has not been chosen
  
