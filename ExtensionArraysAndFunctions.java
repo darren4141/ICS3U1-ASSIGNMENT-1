@@ -66,6 +66,9 @@
 //                      LinkedLists:    customerNames: the names of the customers - to be outputted on the receipt
 //                                      orders: the orders of the customers - to be outputted on the receipt
 //                                      orderPrices: the prices of each order - to be outputted on the receipt
+//                                      quantities: the amount of each order - to be outputted on the receipt
+//                                      currentItems: the current additional items on the bubble tea, to be printed at the end of each order
+//                                      currentPrices: the prices of the additional items on the bubble tea, it is String as it is stored using DecimalFormat as it is just for display
 //====================================================================================================================================================================
 //import some packages for input, decimal formatting, and linkedlists
 import java.io.*;
@@ -113,6 +116,7 @@ public class ExtensionArraysAndFunctions{
         String addTopping;
         String refundChoice;
         int refundItemNumber = 0;
+        int numberRefunded;
 
         int mainChoice = 0;
        
@@ -170,7 +174,7 @@ public class ExtensionArraysAndFunctions{
  
         //DECLARE TOPPING GROUP VARIABLES
         final String[] TOPPINGMENU = {"Wood chips", "Tylenol", "Assorted cubed meat", "Cucumber", "Chalk", "None"};
-        final String[] TOPPINGS = {"wood chips", "Tylenol", "assorted cubed meat", "cucumber", "chalk", "none"};
+        final String[] TOPPINGS = {"wood chips", "Tylenol", "assorted cubed meat", "cucumber", "chalk", "no toppings"};
         String[] toppingMessages = {
             "Be careful of blisters inside of your throat",
             "",
@@ -232,7 +236,11 @@ public class ExtensionArraysAndFunctions{
         }
  
         while(mainChoice != 3 && !name.equals("exit")){//conditions: mainChoice is not 3 AND name does not equal "exit"
- 
+        
+            //CLEAR LINKED LISTS
+            currentItems.clear();
+            currentPrices.clear();;
+
             //UPDATE VARIABLES WITH NAME, AS THEY MUST BE UPDATED EACH TIME A NEW NAME IS ENTERED
             thinLiquidMessages[2] = "What is wrong with you "+name;
             thinLiquidMainMessage = "On a diet today "+name+"?\nWhat type of thin liquid would you like?";
@@ -443,12 +451,12 @@ public class ExtensionArraysAndFunctions{
      
             printReceipt();//printReceipt function just prints a formatted receipt
 
-            System.out.println("Would you like to refund any items? \ny: yes \nanything else: no");
+            System.out.println("Would you like to refund any items? \n<y>: yes \n<any other key>: no");
             refundChoice = br.readLine();
             while(refundChoice.equals("y")){
                 System.out.println("Which item would you like to refund?");
                 for(int i = 0; i < orders.size(); i++){//iterate through the size of LinkedList order
-                    System.out.println((i+1)+". "+customerNames.get(i)+"'s order: ");//customerNames.get(i) will cover all of the elements in the array as the for loop iterates
+                    System.out.println("\n"+(i+1)+". "+customerNames.get(i)+"'s order: ");//customerNames.get(i) will cover all of the elements in the array as the for loop iterates
                     System.out.println(orders.get(i));//same idea as previous line
                     System.out.println(">> QTY: "+quantities.get(i));//same idea as previous line
                     System.out.println(">> $"+moneyFormat.format(orderPrices.get(i)));//same idea as previous line, but we use our moneyFormat object to format the decimal
@@ -457,18 +465,46 @@ public class ExtensionArraysAndFunctions{
                 refundItemNumber--;//SINCE ARRAY INDEXES START AT 0 AND OUR LIST STARTS AT 1
 
                 //REMOVE REFUNDED ITEMS FROM LINKEDLIST AND REMOVE REFUNDED COSTS FROM TOTALCOST
-                customerNames.remove(refundItemNumber);
-                orders.remove(refundItemNumber);
-                totalPrice -= orderPrices.get(refundItemNumber)*quantities.get(refundItemNumber);
-                quantities.remove(refundItemNumber);
-                orderPrices.remove(refundItemNumber);
+
+                if(quantities.get(refundItemNumber)<=1){//if the item we are refunding only has a quantity of 1
+                    //reset all of the variables and lower the price
+                    customerNames.remove(refundItemNumber);
+                    orders.remove(refundItemNumber);
+                    totalPrice -= orderPrices.get(refundItemNumber)*quantities.get(refundItemNumber);
+                    quantities.remove(refundItemNumber);
+                    orderPrices.remove(refundItemNumber);
+                }else{//if the item we are refunding has a quantity greater than 1
+                    System.out.println("You ordered " + quantities.get(refundItemNumber) + " drinks. How many would you like to refund?");//ask them how many they would like to refund
+                    numberRefunded = Integer.parseInt(br.readLine());//take input
+                    if(quantities.get(refundItemNumber) <= numberRefunded){//if we are refunding every item
+                        //reset all of the variables and lower the price
+                        customerNames.remove(refundItemNumber);
+                        orders.remove(refundItemNumber);
+                        totalPrice -= orderPrices.get(refundItemNumber)*quantities.get(refundItemNumber);
+                        quantities.remove(refundItemNumber);
+                        orderPrices.remove(refundItemNumber);
+                    }else{
+                        quantities.set(refundItemNumber, quantities.get(refundItemNumber)-numberRefunded);//set the quantity number to "numberRefunded" less than before
+                        totalPrice -= orderPrices.get(refundItemNumber) * numberRefunded;
+                    }
+
+                }
+
 
                 //RECALCULATE TOTAL
                 hst = totalPrice * TAX;
                 tipAmount = totalPrice * tipPercentage;
                 total = totalPrice + hst + tipAmount;
 
-                System.out.println("Would you like to refund any items? \ny: yes \nanything else: no");
+                System.out.println("Your new receipt:");
+                for(int i = 0; i < orders.size(); i++){//iterate through the size of LinkedList order
+                    System.out.println("\n"+(i+1)+". "+customerNames.get(i)+"'s order: ");//customerNames.get(i) will cover all of the elements in the array as the for loop iterates
+                    System.out.println(orders.get(i));//same idea as previous line
+                    System.out.println(">> QTY: "+quantities.get(i));//same idea as previous line
+                    System.out.println(">> $"+moneyFormat.format(orderPrices.get(i)));//same idea as previous line, but we use our moneyFormat object to format the decimal
+                }
+
+                System.out.println("Would you like to refund any items? \n<y>: yes \n<any other key>: no");
                 refundChoice = br.readLine();
             }
 
@@ -510,12 +546,11 @@ public class ExtensionArraysAndFunctions{
             System.out.println("'--------------------------------------------------------------'");
            
         try{
-                choice = Integer.parseInt(br.readLine());//input choice after menu is outputted
-
+            choice = Integer.parseInt(br.readLine());//input choice after menu is outputted
         }catch(Exception e){//NumberFormatException
-                System.out.println("Listen here "+name+", stop messing around and select a valid option before I kick you out of the store");//UFP if they don't select a menu option
-                chosen = false;//DO WHILE LOOP WILL RUN AGAIN
-                continue;//don't need to run selection if input is invalid
+            System.out.println("Listen here "+name+", stop messing around and select a valid option before I kick you out of the store");//UFP if they don't select a menu option
+            chosen = false;//DO WHILE LOOP WILL RUN AGAIN
+            continue;//don't need to run selection if input is invalid
         }
  
             switch(choice){//switch case for corresponding choice
