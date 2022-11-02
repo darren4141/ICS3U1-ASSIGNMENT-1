@@ -40,7 +40,7 @@
 //                      choice = an int variable used to store the choice of the user and put it through the switch case
 //                      typeBaseChoice = an int variable used to store the user's choice of base liquid
 //                      mainChoice = an int variable used to store the very first choice from the user (1. menu 2. order 3. exit)
-
+ 
 //                      numOfToppings = user inputed variable that tells the 'flavour' for loop how many times to iterate
 //                      stringToppings = a String used to store the list of toppings and format them nicely when the user orders multiple toppings
  
@@ -63,11 +63,11 @@
 //                      baseTea = a String variable used to store the name of the order, it is added onto throughout the program
  
 //                      specialNumber = an int variable that stores the number of the special flavour of the day. It is randomly generated
-
+ 
 //                      numberRefunded = user inputted number of bubble tea's to refund if the quantity of a refunded item is larger than 1
-
+ 
 //                      refundItemNumber = the index of the item the user wants to refund
-
+ 
 //                      stringAdd = a String variable inside of the orderMenu function that stores the String of the option to be added. The stringAdd variable is returned
  
 //                      LinkedLists:    customerNames: the names of the customers - to be outputted on the receipt
@@ -113,17 +113,17 @@ public class ExtensionArraysAndFunctions{
  
  
     public static void main(String[]args) throws IOException{//main method
-
+ 
         //GENERAL VARIABLES - EXPLAINED AT THE TOP
         final double TAX = 0.13;
         int amount = 0;
         int numOfToppings = 0;
         int tipChoice = 0;
-
+ 
         //TOPPING VARIABLES
         String stringToppings = "";
         String addTopping;
-
+ 
         //REFUND VARIABLES
         String refundChoice;
         int refundItemNumber = 0;
@@ -132,7 +132,7 @@ public class ExtensionArraysAndFunctions{
         //MENU CHOICE VARIABLES
         int typeBaseChoice;
         int mainChoice = 0;
-
+ 
  
         //DECLARE OIL GROUP VARIABLES
         final String [] OILMENU = {"Burger oil", "Crude oil", "Olive oil"};
@@ -247,11 +247,11 @@ public class ExtensionArraysAndFunctions{
         }
  
         while(mainChoice != 3 && !name.equals("exit")){//conditions: mainChoice is not 3 AND name does not equal "exit"
-        
+       
             //CLEAR LINKED LISTS
             currentItems.clear();
             currentPrices.clear();;
-
+ 
             //UPDATE VARIABLES WITH NAME, AS THEY MUST BE UPDATED EACH TIME A NEW NAME IS ENTERED
             thinLiquidMessages[2] = "What is wrong with you "+name;
             thinLiquidMainMessage = "On a diet today "+name+"?\nWhat type of thin liquid would you like?";
@@ -319,12 +319,12 @@ public class ExtensionArraysAndFunctions{
                    
                     System.out.println(FLAVOURS[specialNumber].toUpperCase()+" IS THE SPECIAL FLAVOUR OF THE DAY. IT IS 50% OFF AT A NEW PRICE OF: $" +  moneyFormat.format(FLAVOURPRICES[specialNumber]));
                     baseTea = orderMenu(8, FLAVOURS, FLAVOURMENU, flavourMessages, FLAVOURPRICES, flavourMainMessage, false) + " " + baseTea;
-
+ 
                     numOfToppings = 0;
                     do{//loop toppings until "no toppings" is chosen
                         numOfToppings++;
                         addTopping = orderMenu(6, TOPPINGS, TOPPINGMENU, toppingMessages, TOPPINGPRICES, TOPPINGMAINMESSAGE, false);
-                    
+                   
                         if(!addTopping.equals("no toppings")){//don't add the topping if they select "no toppings"
                             if(numOfToppings == 1){//selection for grammar
                                 stringToppings = stringToppings + addTopping;
@@ -341,17 +341,17 @@ public class ExtensionArraysAndFunctions{
                     baseTea = orderMenu(3, SIZES, SIZEMENU, sizeMessages, SIZEPRICES, sizeMainMessage, true) +" "+ baseTea;
                     //call orderMenu function with the return type String, it will return what the user ordered and we can directly add it to our baseTea string
                     System.out.println(name+", you ordered a: " + baseTea);//UFP
-
+ 
                     System.out.println(".--------------------------------------------------.");
                     System.out.printf("|%-40s |%-8s|%n", "Addition:", "Price");//using printf to format nicely
                     System.out.println("|-----------------------------------------+--------|");
-
+ 
                     for(int i = 0; i < currentItems.size(); i++){//iterate through linked list
                         System.out.printf("|%-40s |%-8s|%n", currentItems.get(i), currentPrices.get(i));//output all of the additions and their prices
                     }
                     System.out.println("'--------------------------------------------------'");
                     System.out.println("Your total cost is: $" + moneyFormat.format(drinkPrice));//UFP
-                    
+                   
                     do{//loop for errorchecking
                     chosen = true;//loop will always run once unless there is an exception
                         System.out.println("How many of these would you like? <max 50>");
@@ -365,11 +365,11 @@ public class ExtensionArraysAndFunctions{
                             System.out.println("That's too many! Enter a smaller number");
                             chosen = false;
                         }
-
+ 
                     }while(!chosen);//loop will run as long as chosen is false
                    
                     System.out.println("Alright, "+amount+" of these added to your order!");//UFP
-
+ 
                 break;//break from case 2
                    
                 case 3:
@@ -411,7 +411,7 @@ public class ExtensionArraysAndFunctions{
                 System.out.printf("|%-8s |%-40s |%n", "2.", "Order");
                 System.out.printf("|%-8s |%-40s |%n", "3.", "Exit");
                 System.out.println("'---------------------------------------------------'");
-
+ 
                 do{
                     chosen = true;
                     try{//try the input to catch when a string is inputted
@@ -432,7 +432,7 @@ public class ExtensionArraysAndFunctions{
         }//end of main while loop (mainChoice)
        
         if(orders.size() != 0){//don't ask them to tip if they didnt order anything
-
+ 
             do{
                 chosen = true;
                     System.out.println("That's everything for today?");//goodbye message
@@ -444,7 +444,7 @@ public class ExtensionArraysAndFunctions{
                     System.out.println("3. Amazing! (20%)");
                     System.out.println("4. Wonderful! (25%)");
                     System.out.println("5. Choose custom amount");
-            
+           
                 try{//try the input to catch when a string is inputted
                         tipChoice = Integer.parseInt(br.readLine());//input tip choice option
                 }catch(Exception e){//triggers when a string is entered instead of an int
@@ -465,7 +465,7 @@ public class ExtensionArraysAndFunctions{
             total = totalPrice + hst + tipAmount;
      
             printReceipt();//printReceipt function just prints a formatted receipt
-
+ 
             System.out.println("Would you like to refund any items? \n<y>: yes \n<any other key>: no");
             refundChoice = br.readLine();
             while(refundChoice.equals("y")){
@@ -478,9 +478,9 @@ public class ExtensionArraysAndFunctions{
                 }
                 refundItemNumber = Integer.parseInt(br.readLine());
                 refundItemNumber--;//SINCE ARRAY INDEXES START AT 0 AND OUR LIST STARTS AT 1
-
+ 
                 //REMOVE REFUNDED ITEMS FROM LINKEDLIST AND REMOVE REFUNDED COSTS FROM TOTALCOST
-
+ 
                 if(quantities.get(refundItemNumber)<=1){//if the item we are refunding only has a quantity of 1
                     //reset all of the variables and lower the price
                     customerNames.remove(refundItemNumber);
@@ -502,15 +502,15 @@ public class ExtensionArraysAndFunctions{
                         quantities.set(refundItemNumber, quantities.get(refundItemNumber)-numberRefunded);//set the quantity number to "numberRefunded" less than before
                         totalPrice -= orderPrices.get(refundItemNumber) * numberRefunded;
                     }
-
+ 
                 }
-
-
+ 
+ 
                 //RECALCULATE TOTAL
                 hst = totalPrice * TAX;
                 tipAmount = totalPrice * tipPercentage;
                 total = totalPrice + hst + tipAmount;
-
+ 
                 System.out.println("Your new receipt:");
                 for(int i = 0; i < orders.size(); i++){//iterate through the size of LinkedList order
                     System.out.println("\n"+(i+1)+". "+customerNames.get(i)+"'s order: ");//customerNames.get(i) will cover all of the elements in the array as the for loop iterates
@@ -518,16 +518,16 @@ public class ExtensionArraysAndFunctions{
                     System.out.println(">> QTY: "+quantities.get(i));//same idea as previous line
                     System.out.println(">> $"+moneyFormat.format(orderPrices.get(i)));//same idea as previous line, but we use our moneyFormat object to format the decimal
                 }
-
+ 
                 System.out.println("Would you like to refund any items? \n<y>: yes \n<any other key>: no");
                 refundChoice = br.readLine();
             }
-
+ 
             System.out.println("Here is your final receipt!");
             printReceipt();//printReceipt function just prints a formatted receipt
-
+ 
             System.out.println("Thanks for coming to "+SHOPNAME);
-
+ 
         }else{
         System.out.println("Buy something next time!");//UFP
         }
@@ -711,7 +711,7 @@ public class ExtensionArraysAndFunctions{
                     do{
                         System.out.println("How much would you like to tip? Not zero right "+name+"? I have a family to feed");
                         System.out.print("<don't add a % sign>");
-                        
+                       
                             chosen = true;
                             try{//try the input to catch when a string is inputted
                                 tipPercentage = Integer.parseInt(br.readLine());//let them choose their percentage
@@ -748,7 +748,7 @@ public class ExtensionArraysAndFunctions{
         System.out.println(".--------------------------------------------------------------.");
         System.out.printf("|%-8s |%-40s |%-8s  |%n", "OPTION", "MENU", "PRICE");//printf to print menu header
         System.out.println("|---------+-----------------------------------------+----------|");
-
+ 
         for(int i = 0; i <length; i++){//iterate through all of the elements in the category
             if(!isMultiplier){//if it is not a multiplier type category
                 System.out.printf("|%-8s |%-40s |+$%-8s|%n", (i+1) + ".", menu[i], moneyFormat.format(prices[i]));//print it with a plus sign
