@@ -129,6 +129,7 @@ public class Assignment1{
 					System.out.println("MENU");
 					System.out.println("\nTYPE:");
 					System.out.println(".-------------------------------------------------------.");
+
 					System.out.println("|1. Oil\t\t\tBurger oil\t|+$"+moneyFormat.format(BURGEROILPRICE)+"\t|");
 					System.out.println("|\t\t\tOlive oil\t|+$"+moneyFormat.format(OLIVEOILPRICE)+"\t|");
 					System.out.println("|\t\t\tCrude oil\t|+$"+moneyFormat.format(CRUDEOILPRICE)+"\t|");
@@ -439,20 +440,21 @@ public class Assignment1{
 
 					
 					//CHOOSE TOPPINGS
-                    System.out.println("-----------------------------------------------");
-					System.out.println("How many toppings would you like "+name+"? <max 5>");//UFP
-                    numOfToppings = Integer.parseInt(br.readLine());
                     
-                    for(int i = 1; i <= numOfToppings; i++){
-                        System.out.println("-----------------------------------------------");
-                        System.out.println("Choose a topping");
-                        System.out.println("1. Wood chips\t\t+" + moneyFormat.format(WOODCHIPPRICE));
-                        System.out.println("2. Tylenol\t\t+" + moneyFormat.format(TYLENOLPRICE));
-                        System.out.println("3. Assorted cubed meat\t+" + moneyFormat.format(ASSORTEDCUBEDMEATPRICE));
-                        System.out.println("4. Cucumber\t\t+" + moneyFormat.format(CUCUMBERPRICE));
-                        System.out.println("5. Chalk\t\t+" + moneyFormat.format(CHALKPRICE));
-                        System.out.println("6. Marbles\t\t+" + moneyFormat.format(MARBLEPRICE));
-                        toppingChoice = Integer.parseInt(br.readLine());//input topping menu choice
+                    System.out.println("-----------------------------------------------");
+                    System.out.println("Choose a topping <or select 7 to stop choosing toppings>");
+                    System.out.println("1. Wood chips\t\t+" + moneyFormat.format(WOODCHIPPRICE));
+                    System.out.println("2. Tylenol\t\t+" + moneyFormat.format(TYLENOLPRICE));
+                    System.out.println("3. Assorted cubed meat\t+" + moneyFormat.format(ASSORTEDCUBEDMEATPRICE));
+                    System.out.println("4. Cucumber\t\t+" + moneyFormat.format(CUCUMBERPRICE));
+                    System.out.println("5. Chalk\t\t+" + moneyFormat.format(CHALKPRICE));
+                    System.out.println("6. Marbles\t\t+" + moneyFormat.format(MARBLEPRICE));
+                    System.out.println("7. No more toppings");
+                    toppingChoice = Integer.parseInt(br.readLine());//input topping menu choice
+
+                    numOfToppings = 0;
+                    while(toppingChoice != 7){
+                        numOfToppings++;
                         
                         switch(toppingChoice){//switch case for topping menu choice
                         
@@ -520,26 +522,36 @@ public class Assignment1{
                                         
                                     default:
                                         System.out.println("Listen here "+name+", stop messing around and select a valid option before I kick you out of the store");//UFP if they don't select a menu option
-                                        i--;//in invalid option is entered, the counted loop will run again to account for missing topping
                                 }//end of EXPLODING PEARL switch case
                                 
                                 break;
                                 
+                            case 7://CHOSE NO MORE TOPPINGS
+                                System.out.println("Done choosing toppings!");
+                                break;
                             default:
                                 System.out.println("Listen here "+name+", stop messing around and select a valid option before I kick you out of the store");//UFP if they don't select a menu option
-                                i--;//in invalid option is entered, the counted loop will run again to account for missing topping
 
                         }//end of TOPPINGS switch case
 
-                        if(i == 1){//Selection for propper grammar
+                        if(numOfToppings == 1){//Selection for propper grammar
                             stringToppings = stringToppings + stringToppingChoice;
-                        }else if(i != numOfToppings){
-                            stringToppings = stringToppings +", " + stringToppingChoice;
                         }else{
-                            stringToppings = stringToppings + ", and " + stringToppingChoice;
+                            stringToppings = stringToppings +", " + stringToppingChoice;
                         }
+                        
+                        System.out.println("-----------------------------------------------");
+                        System.out.println("Choose a topping <or select 7 to stop choosing toppings>");
+                        System.out.println("1. Wood chips\t\t+" + moneyFormat.format(WOODCHIPPRICE));
+                        System.out.println("2. Tylenol\t\t+" + moneyFormat.format(TYLENOLPRICE));
+                        System.out.println("3. Assorted cubed meat\t+" + moneyFormat.format(ASSORTEDCUBEDMEATPRICE));
+                        System.out.println("4. Cucumber\t\t+" + moneyFormat.format(CUCUMBERPRICE));
+                        System.out.println("5. Chalk\t\t+" + moneyFormat.format(CHALKPRICE));
+                        System.out.println("6. Marbles\t\t+" + moneyFormat.format(MARBLEPRICE));
+                        System.out.println("7. No more toppings");
+                        toppingChoice = Integer.parseInt(br.readLine());//input topping menu choice
 
-                    }//END OF COUNTED LOOP
+                    }//end of while loop
                     if(numOfToppings != 0) baseTea = baseTea + " with " + stringToppings; //update our baseTea variable, use the word "with" to make it sound better 
                     //if statement for grammar
 
@@ -581,7 +593,7 @@ public class Assignment1{
                             chosen = false;
                         }//end of switch case
                         
-                        baseTea = stringSizeChoice + baseTea;//update base tea with size chosen
+                        baseTea = stringSizeChoice +" "+ baseTea;//update base tea with size chosen
                     }while(!chosen);
 
 
@@ -601,13 +613,12 @@ public class Assignment1{
 				
 			}
 			
-            if(mainChoice ==2){//we dont want to update the reciept if they looked at the menu or decided to exit
+            if(mainChoice == 2){//we dont want to update the reciept if they looked at the menu or decided to exit
                 reciept = reciept + name + "'s order: \n" +baseTea + "\n>>$" + moneyFormat.format(drinkPrice) + "\n";//data from this order is stored in reciept variable
             }
             totalPrice += drinkPrice;
 
             //SET ALL VARIABLES TO 0 OR EMPTY SO THAT DATA IS NOT CARRIED OVER BETWEEN ORDERS
-            name = "";
             baseTea = "";
             drinkPrice = 0;
             stringToppingChoice = "";
@@ -615,7 +626,6 @@ public class Assignment1{
             stringSizeChoice = "";
             stringFlavourChoice="";
             stringTypeBaseLiquidChoice="";
-            mainChoice=0;
             liquidChoice = 0;
             typeThinLiquidChoice = 0;
             typeThickLiquidChoice = 0;
@@ -625,9 +635,11 @@ public class Assignment1{
             sizeChoice = 0;
             typeOilChoice = 0;
 			
-            System.out.println("Welcome to "+SHOPNAME+"!");
-            System.out.println("What is your name?");
-            name = br.readLine();
+            if(mainChoice == 2){
+                System.out.println("Welcome to "+SHOPNAME+"!");
+                System.out.println("What is your name?");
+                name = br.readLine();
+            }
     
             System.out.println("Welcome "+name+"! What would you like today?");
             System.out.println("The special of the day today is: "+special);
