@@ -3,6 +3,7 @@
 This program was written for Grade 11 computer science
 
 It includes a base solve, (Assignment1) where what we could use was limited
+
 The extension includes methods, arrays, and try/catch
 
 There is also an applet extension
