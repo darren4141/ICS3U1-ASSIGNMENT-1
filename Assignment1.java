@@ -2,7 +2,7 @@
 //"Bubble Tea" Program
 //Darren Liu
 //October 28th, 2022
-//Java (ADD VERSION NUMBER)
+//Java 4.6.1
 //====================================================================================================================================================================
 //Problem definition:   Help the sales staff determine the price of a bubble tea order, including multiple similar or different items based on the customer's
 //                      specifications. The program must ask for the customer's name, type of tea, type of topping, number of teas, flavours, and toppings.
@@ -708,5 +708,3 @@ public class Assignment1{
     }//end of main
    
 }//end of class
-
-

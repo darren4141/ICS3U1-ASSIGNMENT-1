@@ -1,14 +1,16 @@
 //====================================================================================================================================================================
-//"Bubble Tea" Program - Function and Array extension
+//"Bubble Tea" Program - Function, Array, and Try/Catch extension
 //Darren Liu
-//October 28th, 2022
-//Java (ADD VERSION NUMBER)
+//October 31st, 2022
+//Java 4.6.1
 //====================================================================================================================================================================
 //Problem definition:   Help the sales staff determine the price of a bubble tea order, including multiple similar or different items based on the customer's
 //                      specifications. The program must ask for the customer's name, type of tea, type of topping, number of teas, flavours, and toppings.
 //                      Output a reciept at the end including all order information and price calculations.
  
-//Extension:            Solve the program using functional and procedural methods, use arrays/lists in the solving of the program
+//Extensions:           Solve the program using functional and procedural methods
+//						Use arrays/lists in the solving of the program
+//						Error proof the input using Try/Catch
  
 //Input:                Name
 //                      Type of tea
