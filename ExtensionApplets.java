@@ -70,9 +70,15 @@ import java.util.LinkedList;
 public class ExtensionApplet extends Applet implements ActionListener{//start of Applet class
 	static DecimalFormat moneyFormat = new DecimalFormat(".00");//declare new DecimalFormat object for outputting money
 	
+	//INITIALIZE OUR COLOUR PALETTE
+	static Color pastelBlue = new Color(152,186,213);
+	static Color tintedGrey = new Color(198,211,227);
+	static Color navyBlue = new Color(48,70,116);
+	static Color skyBlue = new Color(178,203,222);
+	static Color grey = new Color(216,225,232);
+	static Color black = new Color(0,0,0);
+
 	//VARIABLES EXPLAINED AT THE TOP
-	static Color green = new Color(0, 255, 153);
-	
     static LinkedList<String> orders = new LinkedList<String>();
     static LinkedList<Double> orderPrices = new LinkedList<Double>();
     
@@ -138,7 +144,7 @@ public class ExtensionApplet extends Applet implements ActionListener{//start of
     
 	public void init(){//initialization applet class
 		resize(1500, 5000);//resize window
-		setBackground(green);//set background color to our premade "green" variable
+		setBackground(pastelBlue);//set background color to our premade "green" variable
 		order = new Button("Order");//declare new button
 		add(order);//add button to the screen
 		order.addActionListener(this);//make it so that button is "listening" for actions
@@ -221,8 +227,7 @@ public class ExtensionApplet extends Applet implements ActionListener{//start of
 		//the repaint() method will rerun the paint method, meaning that all variable names will be updated
 		//using this, we can change text on the screen or even make text pop-up by renaming a variable, then calling repaint()
 		//text can be popped up by renaming a "" variable
-		Color black = new Color(0,0,0);//set a new color variable for the cursor
-		g.setColor(black);//set cursor color
+		g.setColor(navyBlue);//set cursor color
 		g.drawString(SHOPNAME, 40, 20);//print shop name
 		g.drawString("Your order so far: " + baseTea, 40, 40);//print order, which is meant to be updated using repaint()
 		g.drawString(pressedMessage, 40, 80);//meant to be updated using repaint()
@@ -494,6 +499,8 @@ public class ExtensionApplet extends Applet implements ActionListener{//start of
 			toppingMessage = "";
 			sizeMessage = "";
 			continueMessage = "";
+			orders.clear();
+			orderPrices.clear();
 			
 			//SET LABEL OF BUTTON 1 BACK TO ORIGINAL
 			button1.setLabel("Oil");
@@ -534,6 +541,7 @@ public class ExtensionApplet extends Applet implements ActionListener{//start of
 		button1.setLabel(name[0]);//set names
 		button2.setLabel(name[1]);
 		button3.setLabel(name[2]);
+		
 		pressedMessage = message;//UFP to be updated on screen with repaint()
 		repaint();//update screen
 		
@@ -547,6 +555,12 @@ public class ExtensionApplet extends Applet implements ActionListener{//start of
 		add(button1);//add buttons to the screen
 		add(button2);
 		add(button3);
+		
+		//SET BUTTON COLOURS
+		button1.setBackground(grey);
+		button2.setBackground(grey);
+		button3.setBackground(grey);
+		
 		repaint();//update screen
 	}
 	
@@ -567,7 +581,16 @@ public class ExtensionApplet extends Applet implements ActionListener{//start of
 		toppingMessage = "";
 		sizeMessage = "";
 		continueMessage = "";
-
+		hst = 0;
+		subtotal = 0;
+		finalTotal = 0;
+		finalMessage = "";
+		subtotalPrint = "";
+		hstPrint = "";
+		finalTotalPrint = "";
+		orders.clear();
+		orderPrices.clear();
+		
 		//reset these buttons back to their default names
 		button1.setLabel("Oil");
 		button2.setLabel("Thin Liquids");
@@ -616,6 +639,15 @@ public class ExtensionApplet extends Applet implements ActionListener{//start of
 		flavour4.setVisible(true);
 		flavour5.setVisible(true);
 		flavour6.setVisible(true);
+		
+		//SET BUTTON COLOURS
+		flavour1.setBackground(grey);
+		flavour2.setBackground(grey);
+		flavour3.setBackground(grey);
+		flavour4.setBackground(grey);
+		flavour5.setBackground(grey);
+		flavour6.setBackground(grey);
+		
 	}
 	
 	public void makeToppingButtons(){//MAKE ALL OF THE TOPPINGS BUTTONS
@@ -636,6 +668,15 @@ public class ExtensionApplet extends Applet implements ActionListener{//start of
 		topping4.setVisible(true);
 		topping5.setVisible(true);
 		topping6.setVisible(true);
+		
+		//SET BUTTON COLOURS
+		topping1.setBackground(grey);
+		topping2.setBackground(grey);
+		topping3.setBackground(grey);
+		topping4.setBackground(grey);
+		topping5.setBackground(grey);
+		topping6.setBackground(grey);
+
 	}
 	
 	public void makeSizeButtons(){//MAKE ALL OF THE SIZE BUTTONS
@@ -649,6 +690,11 @@ public class ExtensionApplet extends Applet implements ActionListener{//start of
 		size1.setVisible(true);
 		size2.setVisible(true);
 		size3.setVisible(true);
+		
+		//SET BUTTON COLOURS
+		size1.setBackground(grey);
+		size2.setBackground(grey);
+		size3.setBackground(grey);
 
 		sizeMessage = "What size would you like?";//UFP to be updated on screen with repaint()
 	}
@@ -662,6 +708,11 @@ public class ExtensionApplet extends Applet implements ActionListener{//start of
 		//MAKE THEM ALL VISIBLE
 		keepOrdering.setVisible(true);
 		stopOrdering.setVisible(true);
+		
+		//SET BUTTON COLOURS
+		keepOrdering.setBackground(grey);
+		stopOrdering.setBackground(grey);
+		
 		continueMessage = "Would you like to keep ordering teas?";//UFP to be updated on screen with repaint()
 	}
 	
