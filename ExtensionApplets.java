@@ -499,8 +499,6 @@ public class ExtensionApplet extends Applet implements ActionListener{//start of
 			toppingMessage = "";
 			sizeMessage = "";
 			continueMessage = "";
-			orders.clear();
-			orderPrices.clear();
 			
 			//SET LABEL OF BUTTON 1 BACK TO ORIGINAL
 			button1.setLabel("Oil");
