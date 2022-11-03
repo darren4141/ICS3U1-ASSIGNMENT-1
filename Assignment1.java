@@ -66,7 +66,7 @@
 //                      The variables are meant to be manually changed every day, which is very simple, as it is just changing the names of two variables
 //====================================================================================================================================================================
  
- 
+//import libraries to allow input, decimal formatting
 import java.io.*;
 import java.text.DecimalFormat;
 public class Assignment1{
@@ -636,7 +636,7 @@ public class Assignment1{
             typeOilChoice = 0;
            
             if(mainChoice == 2){
-                System.out.println("Welcome to "+SHOPNAME+"!");
+                System.out.println("\nWelcome to "+SHOPNAME+"!");
                 System.out.println("What is your name?");
                 name = br.readLine();
             }
@@ -699,7 +699,7 @@ public class Assignment1{
         System.out.println("===========================================================================");
         System.out.println(reciept);//our compounded variable containing all orders
         System.out.println("===========================================================================");
-        System.out.println("Subtotal total: $"+moneyFormat.format(totalPrice));//format to two decimal places
+        System.out.println("Subtotal: $"+moneyFormat.format(totalPrice));//format to two decimal places
         System.out.println("HST: $"+moneyFormat.format(hst));
         System.out.println("Tip: $"+moneyFormat.format(tipAmount));
         System.out.println("Total: $"+moneyFormat.format(total));
