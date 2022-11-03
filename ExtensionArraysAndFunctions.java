@@ -9,8 +9,8 @@
 //                      Output a reciept at the end including all order information and price calculations.
  
 //Extensions:           Solve the program using functional and procedural methods
-//						Use arrays/lists in the solving of the program
-//						Error proof the input using Try/Catch
+//                      Use arrays/lists in the solving of the program
+//                      Error proof the input using Try/Catch
  
 //Input:                Name
 //                      Type of tea
@@ -221,31 +221,31 @@ public class ExtensionArraysAndFunctions{
  
         if(!name.equals("exit")){//don't give them this choice if their name is exit
             do{
-           chosen = true;
-           System.out.println("Welcome "+name+"! What would you like today?");
-           System.out.println(".---------------------------------------------------.");//printf to make it look nice
-           System.out.printf("|%-8s |%-40s |%n", "OPTION", "ACTION");
-           System.out.println("|---------+-----------------------------------------|");
-           System.out.printf("|%-8s |%-40s |%n", "1.", "Menu");
-           System.out.printf("|%-8s |%-40s |%n", "2.", "Order");
-           System.out.printf("|%-8s |%-40s |%n", "3.", "Exit");
-           System.out.println("'---------------------------------------------------'");
-           
-           try{//try the input to catch when a string is inputted
-           mainChoice = Integer.parseInt(br.readLine()); //input choice
-       }catch(Exception e){//triggers when a string is entered instead of an int
-        System.out.println("Listen here "+name+", stop messing around and select a valid option before I kick you out of the store");//UFP if they don't select a menu option
-           chosen = false;
-       }
-           
-           if(mainChoice > 3){
-        System.out.println("Listen here "+name+", stop messing around and select a valid option before I kick you out of the store");//UFP if they don't select a menu option
-           chosen = false;
-           }
-           
+	           chosen = true;
+	           System.out.println("Welcome "+name+"! What would you like today?");
+	           System.out.println(".---------------------------------------------------.");//printf to make it look nice
+	           System.out.printf("|%-8s |%-40s |%n", "OPTION", "ACTION");
+	           System.out.println("|---------+-----------------------------------------|");
+	           System.out.printf("|%-8s |%-40s |%n", "1.", "Menu");
+	           System.out.printf("|%-8s |%-40s |%n", "2.", "Order");
+	           System.out.printf("|%-8s |%-40s |%n", "3.", "Exit");
+	           System.out.println("'---------------------------------------------------'");
+	           
+	           try{//try the input to catch when a string is inputted
+	        	   mainChoice = Integer.parseInt(br.readLine()); //input choice
+	           }catch(Exception e){//triggers when a string is entered instead of an int
+	        	   System.out.println("Listen here "+name+", stop messing around and select a valid option before I kick you out of the store");//UFP if they don't select a menu option
+	        	   chosen = false;
+	           }
+	           
+	           if(mainChoice > 3){
+	        	   System.out.println("Listen here "+name+", stop messing around and select a valid option before I kick you out of the store");//UFP if they don't select a menu option
+	        	   chosen = false;
+	           }
+	           
             }while(!chosen);
         }else{//their name is exit
-        mainChoice = 3;//we won't enter the while loop if exit is entered as the name
+        	mainChoice = 3;//we won't enter the while loop if exit is entered as the name
         }
  
         while(mainChoice != 3 && !name.equals("exit")){//conditions: mainChoice is not 3 AND name does not equal "exit"
@@ -270,6 +270,7 @@ public class ExtensionArraysAndFunctions{
            
             //UFP telling them know what the special of the day is
             System.out.println(FLAVOURS[specialNumber].toUpperCase()+" IS THE SPECIAL FLAVOUR OF THE DAY. IT IS 50% OFF AT A NEW PRICE OF: $" +  moneyFormat.format(FLAVOURPRICES[specialNumber]));
+            
             switch(mainChoice){//switch for the main choice
                 case 1://CHOSE MENU
                     //output the menu, used functions to do it, function will be explained at the function
@@ -355,7 +356,7 @@ public class ExtensionArraysAndFunctions{
                     System.out.println("Your total cost is: $" + moneyFormat.format(drinkPrice));//UFP
                    
                     do{//loop for errorchecking
-                    chosen = true;//loop will always run once unless there is an exception
+                    	chosen = true;//loop will always run once unless there is an exception
                         System.out.println("How many of these would you like? <max 50>");
                         try{//try the input to catch when a string is inputted
                             amount = Integer.parseInt(br.readLine());
@@ -372,7 +373,7 @@ public class ExtensionArraysAndFunctions{
                    
                     System.out.println("Alright, "+amount+" of these added to your order!");//UFP
  
-                break;//break from case 2
+                    break;//break from case 2
                    
                 case 3:
                     System.out.println("Goodbye "+name+"! We expect to see you again!");//UFP
@@ -384,10 +385,10 @@ public class ExtensionArraysAndFunctions{
             }//end of main choice switch case
  
             if(mainChoice == 2){//we don't want to update the receipt if they looked at the menu or decided to exit
-            quantities.add(amount);
-            customerNames.add(name); //ADD ELEMENTS FROM THIS ITERATION TO THE LINKED LIST SO THAT THEY CAN BE PRINTED ON THE RECEIPT
-            orders.add(baseTea);
-            orderPrices.add(drinkPrice);
+	            quantities.add(amount);
+	            customerNames.add(name); //ADD ELEMENTS FROM THIS ITERATION TO THE LINKED LIST SO THAT THEY CAN BE PRINTED ON THE RECEIPT
+	            orders.add(baseTea);
+	            orderPrices.add(drinkPrice);
             }
             totalPrice += (drinkPrice*amount);//increment total price by drink price
            
@@ -437,21 +438,21 @@ public class ExtensionArraysAndFunctions{
  
             do{
                 chosen = true;
-                    System.out.println("That's everything for today?");//goodbye message
-                    System.out.println("You feel the cashier's stare burn into you...");//the Ontario special
-                    System.out.println("Go ahead and tip!");//the Ontario special
-                    System.out.println("TIP: ");
-                    System.out.println("1. Good. (10%)");
-                    System.out.println("2. Great! (15%)");
-                    System.out.println("3. Amazing! (20%)");
-                    System.out.println("4. Wonderful! (25%)");
-                    System.out.println("5. Choose custom amount");
+                System.out.println("That's everything for today?");//goodbye message
+                System.out.println("You feel the cashier's stare burn into you...");//the Ontario special
+                System.out.println("Go ahead and tip!");//the Ontario special
+                System.out.println("TIP: ");
+                System.out.println("1. Good. (10%)");
+                System.out.println("2. Great! (15%)");
+                System.out.println("3. Amazing! (20%)");
+                System.out.println("4. Wonderful! (25%)");
+                System.out.println("5. Choose custom amount");
            
                 try{//try the input to catch when a string is inputted
-                        tipChoice = Integer.parseInt(br.readLine());//input tip choice option
+                    tipChoice = Integer.parseInt(br.readLine());//input tip choice option
                 }catch(Exception e){//triggers when a string is entered instead of an int
-                        System.out.println("Listen here "+name+", stop messing around and select a valid option before I kick you out of the store");//UFP if they don't select a menu option
-                        chosen = false;
+                	System.out.println("Listen here "+name+", stop messing around and select a valid option before I kick you out of the store");//UFP if they don't select a menu option
+                    chosen = false;
                 }
                 if(tipChoice > 5){
                     System.out.println("Listen here "+name+", stop messing around and select a valid option before I kick you out of the store");//UFP if they don't select a menu option
@@ -508,18 +509,18 @@ public class ExtensionArraysAndFunctions{
                 }
  
  
-                //RECALCULATE TOTAL
-                hst = totalPrice * TAX;
-                tipAmount = totalPrice * tipPercentage;
-                total = totalPrice + hst + tipAmount;
+	            //RECALCULATE TOTAL
+	            hst = totalPrice * TAX;
+	            tipAmount = totalPrice * tipPercentage;
+	            total = totalPrice + hst + tipAmount;
  
-                System.out.println("Your new receipt:");
-                for(int i = 0; i < orders.size(); i++){//iterate through the size of LinkedList order
+	                System.out.println("Your new receipt:");
+	            for(int i = 0; i < orders.size(); i++){//iterate through the size of LinkedList order
                     System.out.println("\n"+(i+1)+". "+customerNames.get(i)+"'s order: ");//customerNames.get(i) will cover all of the elements in the array as the for loop iterates
                     System.out.println(orders.get(i));//same idea as previous line
                     System.out.println(">> QTY: "+quantities.get(i));//same idea as previous line
                     System.out.println(">> $"+moneyFormat.format(orderPrices.get(i)));//same idea as previous line, but we use our moneyFormat object to format the decimal
-                }
+	            }
  
                 System.out.println("Would you like to refund any items? \n<y>: yes \n<any other key>: no");
                 refundChoice = br.readLine();
@@ -562,13 +563,13 @@ public class ExtensionArraysAndFunctions{
             }
             System.out.println("'--------------------------------------------------------------'");
            
-        try{//try the input to catch when a string is inputted
-            choice = Integer.parseInt(br.readLine());//input choice after menu is outputted
-        }catch(Exception e){//triggers when a string is entered instead of an int//NumberFormatException
-            System.out.println("Listen here "+name+", stop messing around and select a valid option before I kick you out of the store");//UFP if they don't select a menu option
-            chosen = false;//DO WHILE LOOP WILL RUN AGAIN
-            continue;//don't need to run selection if input is invalid
-        }
+	        try{//try the input to catch when a string is inputted
+	            choice = Integer.parseInt(br.readLine());//input choice after menu is outputted
+	        }catch(Exception e){//triggers when a string is entered instead of an int//NumberFormatException
+	            System.out.println("Listen here "+name+", stop messing around and select a valid option before I kick you out of the store");//UFP if they don't select a menu option
+	            chosen = false;//DO WHILE LOOP WILL RUN AGAIN
+	            continue;//don't need to run selection if input is invalid
+	        }
  
             switch(choice){//switch case for corresponding choice
                 case 1:
@@ -688,8 +689,8 @@ public class ExtensionArraysAndFunctions{
                     chosen = false;//DO WHILE LOOP WILL RUN AGAIN
                 }//end of switch case
        
-            }while(!chosen);//while option has not been chosen
-            return stringAdd;//return the topping/flavour chosen to be added to the baseTea
+        }while(!chosen);//while option has not been chosen
+        return stringAdd;//return the topping/flavour chosen to be added to the baseTea
     }//end of orderMenu method
  
     static void tip(int tipChoice) throws IOException{
@@ -714,18 +715,18 @@ public class ExtensionArraysAndFunctions{
                         System.out.println("How much would you like to tip? Not zero right "+name+"? I have a family to feed");
                         System.out.print("<don't add a % sign>");
                        
-                            chosen = true;
-                            try{//try the input to catch when a string is inputted
-                                tipPercentage = Integer.parseInt(br.readLine());//let them choose their percentage
-                            }catch(Exception e){//triggers when a string is entered instead of an int
-                                System.out.println("Hey! Tipping shouldn't be treated as a joke. I work very hard");//UFP if they don't select a menu option
-                                chosen = false;
-                                continue;
-                            }
-                            if(tipPercentage < 0 || tipPercentage > 500){//errorcheck exceptional values, upper range is 500 because some very generous people might tip more than 100%
-                                System.out.println("Hey! Tipping shouldn't be treated as a joke. I work very hard");//UFP if they don't select a menu option
-                                chosen = false;
-                            }
+                        chosen = true;
+                        try{//try the input to catch when a string is inputted
+                        	tipPercentage = Integer.parseInt(br.readLine());//let them choose their percentage
+                        }catch(Exception e){//triggers when a string is entered instead of an int
+                            System.out.println("Hey! Tipping shouldn't be treated as a joke. I work very hard");//UFP if they don't select a menu option
+                            chosen = false;
+                            continue;
+                        }
+                        if(tipPercentage < 0 || tipPercentage > 500){//errorcheck exceptional values, upper range is 500 because some very generous people might tip more than 100%
+                            System.out.println("Hey! Tipping shouldn't be treated as a joke. I work very hard");//UFP if they don't select a menu option
+                            chosen = false;
+                        }
                     }while(!chosen);
                     tipPercentage /= 100;//convert percentage to decimal for operation
                     break;
@@ -745,7 +746,7 @@ public class ExtensionArraysAndFunctions{
     //              prices: the prices on the menu - to be printed
     //              isMultiplier: changes some outputs based on if the category adds prices or multiplies the total
    
-        System.out.println(type);//output the category at the top
+    	System.out.println(type);//output the category at the top
  
         System.out.println(".--------------------------------------------------------------.");
         System.out.printf("|%-8s |%-40s |%-8s  |%n", "OPTION", "MENU", "PRICE");//printf to print menu header
@@ -763,9 +764,9 @@ public class ExtensionArraysAndFunctions{
    
     static void printReceipt(){
     //FUNCTION USED TO PRINT THE RECIEPT
-    System.out.println("RECEIPT");
-        System.out.println("\n===========================================================================");
-        System.out.println(SHOPNAME);//output SHOPNAME constant
+    	System.out.println("RECEIPT");
+    	System.out.println("\n===========================================================================");
+    	System.out.println(SHOPNAME);//output SHOPNAME constant
         System.out.println("\"Delicious Teas!\"");
         System.out.println("201 Town Centre Blvd, Markham, ON");
         System.out.println("Tel: "+PHONENUM);//output PHONENUM constant
