@@ -12,6 +12,4 @@ Program: Bubble tea program
 
 Task: input the user's choice of bubble tea, how many they would like, how much they would like to tip, etc
 
-This program took ~25 hours over the span of 1 week
-
 2000+ lines of code across 3 files
