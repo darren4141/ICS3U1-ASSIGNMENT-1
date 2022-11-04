@@ -13,3 +13,5 @@ Program: Bubble tea program
 Task: input the user's choice of bubble tea, how many they would like, how much they would like to tip, etc
 
 2000+ lines of code across 3 files
+
+Flavours are disgusting for fun!
