@@ -1,4 +1,4 @@
-# ICS3O1-ASSIGNMENT-1
+# ICS3U1-ASSIGNMENT-1
 
 This program was written for Grade 11 computer science
 
